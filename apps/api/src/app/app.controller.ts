@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Get,
   Post,
@@ -7,19 +8,28 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AppService } from './app.service';
+
+type CreateUserProps = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  photo: File;
+};
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get('users')
-  getUsers() {
+  async getUsers() {
     return this.appService.getUsers();
   }
 
   @Post('users')
   @UseInterceptors(FileInterceptor('photo', { dest: './uploads' }))
-  createUser(@UploadedFile() file) {
+  async createUser(@UploadedFile() file, @Body() user: CreateUserProps) {
     console.log(`file`, file);
-    return this.appService.createUser(file);
+    console.log(`user`, user);
+    return this.appService.createUser({ photo: file, ...user });
   }
 }

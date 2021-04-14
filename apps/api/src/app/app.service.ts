@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 
 type User = {
-  id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
+  phone: string;
   photo?: File;
 };
 
@@ -12,9 +13,10 @@ export class AppService {
   getUsers(): User[] {
     return [
       {
-        id: '123',
-        name: 'geoff whitehead',
+        firstName: 'geoff',
+        lastName: 'whitehead',
         email: 'geoff1012@gmail.com',
+        phone: '1233454567',
       },
     ];
   }

@@ -14,6 +14,8 @@ export const useRegisterUser = () => {
   const [hasErrored, setHasErrored] = useState(false);
   const postUser = async (data: UserData) => {
     setIsLoading(true);
+    setHasErrored(false);
+
     let formData = new FormData();
     formData.append('photo', data.photo, data.photo.name);
     formData.append('firstName', data.firstName);
