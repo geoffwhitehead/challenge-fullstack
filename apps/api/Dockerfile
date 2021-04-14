@@ -1,8 +1,14 @@
-FROM node:lts-alpine
+FROM base-image:nx-base AS builder
+
+ARG NODE_ENV
+ARG BUILD_FLAG
+WORKDIR /app/builder
+COPY . .
+RUN npx nx build api ${BUILD_FLAG}
+FROM base-image:nx-base
+
 WORKDIR /app
-COPY ./dist/apps/api .
-ENV PORT=3333
-EXPOSE ${PORT}
-RUN yarn install --production
-RUN npm install reflect-metadata tslib rxjs @nestjs/platform-express
-CMD node ./main.js
+COPY --from=builder /app/builder ./
+ENV NODE_ENV=$NODE_ENV
+
+CMD ['node', "./dist/apps/api/main.js"]
