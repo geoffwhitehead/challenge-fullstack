@@ -1,6 +1,3 @@
-import { useEffect } from 'react';
-import styled from 'styled-components';
-import { config } from '../config';
 import { useUsers } from '../hooks/useUsers';
 import { UserList } from './components/UserList/UserList';
 
