@@ -1,14 +1,9 @@
-FROM base-image:nx-base AS builder
 
-ARG NODE_ENV
-ARG BUILD_FLAG
-WORKDIR /app/builder
-COPY . .
-RUN npx nx build api ${BUILD_FLAG}
-FROM base-image:nx-base
-
+FROM node:lts-alpine
 WORKDIR /app
-COPY --from=builder /app/builder ./
-ENV NODE_ENV=$NODE_ENV
-
-CMD ['node', "./dist/apps/api/main.js"]
+COPY ./dist/apps/api .
+ENV PORT=3333
+EXPOSE ${PORT}
+RUN npm install --production
+RUN npm install reflect-metadata tslib rxjs hbs
+CMD node ./main.js

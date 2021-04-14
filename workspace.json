@@ -96,7 +96,7 @@
           "options": {
             "commands": [
               "nx build ui",
-              "docker build -f ./apps/html/Dockerfile . -t ui"
+              "docker build -f ./apps/ui/Dockerfile . -t ui"
             ],
             "parallel": false
           }
@@ -183,7 +183,7 @@
           "options": {
             "commands": [
               "nx build api",
-              "docker build -f ./apps/html/Dockerfile . -t api"
+              "docker build -f ./apps/api/Dockerfile . -t api"
             ],
             "parallel": false
           }
