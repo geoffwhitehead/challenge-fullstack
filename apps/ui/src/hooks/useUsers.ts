@@ -8,8 +8,6 @@ export const useUsers = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log('fetching data');
-      console.log(`${config.baseUrl}/users`);
       setIsLoading(true);
       const response = await fetch(`${config.baseUrl}/users`);
       const result = await response.json();

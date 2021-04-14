@@ -4,6 +4,7 @@ type User = {
   id: string;
   name: string;
   email: string;
+  photo?: File;
 };
 
 @Injectable()
@@ -16,5 +17,10 @@ export class AppService {
         email: 'geoff1012@gmail.com',
       },
     ];
+  }
+
+  createUser(user: User) {
+    console.log(`user`, user);
+    return true;
   }
 }

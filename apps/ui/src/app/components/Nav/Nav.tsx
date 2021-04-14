@@ -15,7 +15,11 @@ export const Nav: React.FC<Nav> = ({ routes }) => {
   return (
     <Navbar>
       {routes.map((route) => {
-        return <NavItem to={route.path}>{route.name}</NavItem>;
+        return (
+          <NavItem key={route.path} to={route.path}>
+            {route.name}
+          </NavItem>
+        );
       })}
     </Navbar>
   );
