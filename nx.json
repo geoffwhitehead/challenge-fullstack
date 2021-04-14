@@ -14,7 +14,6 @@
   "projects": {
     "ui": { "tags": [] },
     "ui-e2e": { "tags": [], "implicitDependencies": ["ui"] },
-    "auth": { "tags": [] },
     "api": { "tags": [] }
   }
 }
