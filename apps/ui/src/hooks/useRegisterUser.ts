@@ -1,18 +1,12 @@
+import { User } from '@org/types';
 import { useState } from 'react';
 import { config } from '../config';
-
-type UserData = {
-  firstName: string;
-  lastName: string;
-  phone: string;
-  email: string;
-  photo: File;
-};
 
 export const useRegisterUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasErrored, setHasErrored] = useState(false);
-  const postUser = async (data: UserData) => {
+
+  const postUser = async (data: User) => {
     setIsLoading(true);
     setHasErrored(false);
 

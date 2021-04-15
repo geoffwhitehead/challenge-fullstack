@@ -1,8 +1,9 @@
+import { User } from '@org/types';
 import { useEffect, useState } from 'react';
 import { config } from '../config';
 
 export const useUsers = () => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasErrored, setHasErrored] = useState(false);
 

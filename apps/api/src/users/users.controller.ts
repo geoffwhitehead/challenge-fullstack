@@ -7,7 +7,8 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { User, UsersService } from './users.service';
+import { User } from '@org/types';
+import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {

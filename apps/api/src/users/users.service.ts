@@ -1,13 +1,5 @@
 import { Injectable } from '@nestjs/common';
-
-export type User = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  photo?: File;
-};
-
+import { User } from '@org/types';
 @Injectable()
 export class UsersService {
   getUsers(): User[] {

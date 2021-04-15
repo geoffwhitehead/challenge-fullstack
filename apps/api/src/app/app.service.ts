@@ -1,18 +1,12 @@
 import { Injectable } from '@nestjs/common';
-
-type Settings = {
-  users: {
-    active: boolean;
-  };
-};
+import { Settings } from '@org/types';
 
 @Injectable()
 export class AppService {
-  /**Some of these routes could be seperated in their own modules */
   getSettings(): Settings {
     return {
       users: {
-        active: true,
+        isActive: true,
       },
     };
   }
