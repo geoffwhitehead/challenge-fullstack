@@ -1,25 +1,40 @@
-import { useSettings } from 'apps/ui/src/hooks/useSettings';
 import { useUsers } from 'apps/ui/src/hooks/useUsers';
 import React from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { Error } from '../../components/Error/Error';
+import { Loading } from '../../components/Loading/Loading';
+import { useAuthenticatedUser } from '../../contexts/AuthenticatedContext';
+import { useSettings } from '../../contexts/SettingsContext';
 import { UserList } from './UserList/UserList';
 
 export const UsersPage: React.FC<{}> = () => {
-  const [users, isLoading, hasErrored] = useUsers();
-  const [settings, settingsIsLoading, settingsHasErrored] = useSettings();
+  const { users, isLoading, hasErrored } = useUsers();
+  const { isAuthenticated } = useAuthenticatedUser();
+  const { settings } = useSettings();
 
-  if (hasErrored || settingsHasErrored) {
-    return <p>Something has gone wrong... </p>;
+  if (hasErrored) {
+    return <Error />;
   }
 
-  if (isLoading || settingsIsLoading) {
-    <p>Loading...</p>;
+  if (isLoading) {
+    return <Loading />;
   }
 
   const isUsersGridEnabled = settings?.users?.isActive;
+  const handleUserGridToggle = () => {};
 
   return (
     <div>
-      <button></button>
+      <Controls>
+        <Link to="/users/create">
+          <button>Create user</button>
+        </Link>
+        <button disabled={!isAuthenticated} onClick={handleUserGridToggle}>
+          {`${isUsersGridEnabled ? 'Disable' : 'Enable'} users grid`}
+        </button>
+      </Controls>
+
       {isUsersGridEnabled ? (
         <UserList users={users} />
       ) : (
@@ -28,3 +43,7 @@ export const UsersPage: React.FC<{}> = () => {
     </div>
   );
 };
+
+const Controls = styled.div`
+  padding: 1rem 0rem;
+`;

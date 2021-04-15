@@ -2,7 +2,7 @@ import { Settings } from '@org/types';
 import { useEffect, useState } from 'react';
 import { config } from '../config';
 
-export const useSettings = () => {
+export const useGetSettings = () => {
   const [settings, setSettings] = useState<Settings>();
   const [isLoading, setIsLoading] = useState(false);
   const [hasErrored, setHasErrored] = useState(false);
@@ -22,5 +22,5 @@ export const useSettings = () => {
 
     fetchData();
   }, [setSettings, setIsLoading, setHasErrored]);
-  return [settings, isLoading, hasErrored] as const;
+  return { settings, isLoading, hasErrored };
 };

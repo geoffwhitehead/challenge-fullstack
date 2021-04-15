@@ -1,13 +1,15 @@
 import { UserLoginProps } from '@org/types';
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useAuthenticatedUser } from '../app/contexts/AuthenticatedContext';
 import { config } from '../config';
 import { setItem } from '../helpers/localStorage';
-import { useIsAuthenticated } from './useIsAuthenticated';
 
 export const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasErrored, setHasErrored] = useState(false);
-  const [_, setIsAuthenticated] = useIsAuthenticated();
+  const { isAuthenticated, setIsAuthenticated } = useAuthenticatedUser();
+  const history = useHistory();
 
   const login = async (data: UserLoginProps) => {
     setIsLoading(true);
@@ -28,6 +30,7 @@ export const useLogin = () => {
     } else {
       setItem('access_token', body.access_token);
       setIsAuthenticated(true);
+      history.push('/');
     }
     setIsLoading(false);
   };

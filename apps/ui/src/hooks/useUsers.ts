@@ -22,5 +22,5 @@ export const useUsers = () => {
 
     fetchData();
   }, [setUsers, setIsLoading]);
-  return [users, isLoading, hasErrored] as const;
+  return { users, isLoading, hasErrored };
 };

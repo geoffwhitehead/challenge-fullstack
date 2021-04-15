@@ -1,15 +1,17 @@
-import { useRegisterUser } from 'apps/ui/src/hooks/useRegisterUser';
+import { useCreateUser } from 'apps/ui/src/hooks/useCreateUser';
 import { useFormik } from 'formik';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
-import { Error, Field, Label } from '../../components/Form';
+import { Error, Field, Label } from '../../../components/Form';
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png'];
 const FILE_SIZE = 1000000 * 3; // in bytes;
 
-export const RegisterPage: React.FC<{}> = () => {
-  const [postUser, isLoading, hasErrored] = useRegisterUser();
+export const CreateUserPage: React.FC<{}> = () => {
+  const [postUser, isLoading, hasErrored] = useCreateUser();
+  const history = useHistory();
 
   const formik = useFormik({
     initialValues: {
@@ -43,14 +45,12 @@ export const RegisterPage: React.FC<{}> = () => {
         .matches(phoneRegExp, 'Phone number is not valid')
         .required('Required'),
     }),
-    onSubmit: (values) => {
-      console.log(`values`, values);
-      postUser(values);
+    onSubmit: async (values) => {
+      await postUser(values);
+      history.push('/users');
     },
   });
 
-  console.log(`formik.values`, formik.values);
-  console.log(`formik.errors`, formik.errors);
   return (
     <form onSubmit={formik.handleSubmit}>
       <Field>

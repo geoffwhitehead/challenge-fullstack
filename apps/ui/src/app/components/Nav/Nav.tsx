@@ -1,7 +1,7 @@
-import { useIsAuthenticated } from 'apps/ui/src/hooks/useIsAuthenticated';
 import { useLogout } from 'apps/ui/src/hooks/useLogout';
 import React from 'react';
 import styled from 'styled-components';
+import { useAuthenticatedUser } from '../../contexts/AuthenticatedContext';
 import { NavItem } from './NavItem';
 
 type Nav = {
@@ -14,7 +14,7 @@ type RouteItem = {
 };
 
 export const Nav: React.FC<Nav> = ({ routes }) => {
-  const [isAuthenticated] = useIsAuthenticated();
+  const { isAuthenticated } = useAuthenticatedUser();
   const [logout] = useLogout();
 
   return (

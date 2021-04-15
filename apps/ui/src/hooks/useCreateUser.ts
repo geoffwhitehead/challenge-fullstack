@@ -2,7 +2,7 @@ import { User } from '@org/types';
 import { useState } from 'react';
 import { config } from '../config';
 
-export const useRegisterUser = () => {
+export const useCreateUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasErrored, setHasErrored] = useState(false);
 
