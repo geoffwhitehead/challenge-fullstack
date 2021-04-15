@@ -15,10 +15,16 @@ export const UsersPage: React.FC<{}> = () => {
     <p>Loading...</p>;
   }
 
+  const isUsersGridEnabled = settings?.users?.isActive;
+
   return (
     <div>
       <button></button>
-      {settings?.users?.isActive && <UserList users={users} />}
+      {isUsersGridEnabled ? (
+        <UserList users={users} />
+      ) : (
+        <p>Users grid is disabled</p>
+      )}
     </div>
   );
 };
