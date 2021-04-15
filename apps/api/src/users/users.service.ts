@@ -9,6 +9,7 @@ export class UsersService {
         lastName: 'whitehead',
         email: 'geoff1012@gmail.com',
         phone: '1233454567',
+        photo: `test.png`,
       },
     ];
   }

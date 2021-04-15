@@ -1,4 +1,5 @@
 import { User } from '@org/types';
+import { config } from 'apps/ui/src/config';
 import React from 'react';
 import { useTable } from 'react-table';
 import styled from 'styled-components';
@@ -29,8 +30,19 @@ export const UserList: React.FC<UserListProps> = ({ users }) => {
       },
       {
         Header: 'Actions',
-        Cell: () => {
-          return <Button>View photo</Button>;
+        Cell: (a) => {
+          return (
+            <Button
+              onClick={() =>
+                window.open(
+                  `${config.baseUrl}/users/photo/${a.row.original.photo}`,
+                  '_blank'
+                )
+              }
+            >
+              View photo
+            </Button>
+          );
         },
       },
     ],

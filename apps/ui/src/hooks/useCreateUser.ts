@@ -1,4 +1,4 @@
-import { User } from '@org/types';
+import { UserCreateProps } from '@org/types';
 import { useState } from 'react';
 import { config } from '../config';
 
@@ -6,7 +6,7 @@ export const useCreateUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasErrored, setHasErrored] = useState(false);
 
-  const postUser = async (data: User) => {
+  const postUser = async (data: UserCreateProps) => {
     setIsLoading(true);
     setHasErrored(false);
 

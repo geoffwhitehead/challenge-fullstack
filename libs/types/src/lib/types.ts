@@ -9,7 +9,15 @@ export type User = {
   lastName: string;
   email: string;
   phone: string;
-  photo?: File;
+  photo: string;
+};
+
+export type UserCreateProps = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  photo: File;
 };
 
 export type UserLoginProps = {

@@ -44,10 +44,9 @@ export class UsersController {
         cb(null, SUPPORTED_FORMATS.includes(file.mimetype)),
     })
   )
-  async createUser(@UploadedFile() file, @Body() user: User) {
-    console.log(`file`, file);
-    console.log(`user`, user);
-    return this.userService.createUser({ photo: file, ...user });
+  async createUser(@UploadedFile() file, @Body() user: Omit<User, 'photo'>) {
+    // TODO: save all file info in asset records
+    return this.userService.createUser({ photo: file.filename, ...user });
   }
 
   @Get('photo/:imgId')
