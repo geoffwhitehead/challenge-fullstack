@@ -2,13 +2,20 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
+  Res,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { User } from '@org/types';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 import { UsersService } from './users.service';
+
+const FILE_SIZE = 1000000 * 3; // in bytes;
+const SUPPORTED_FORMATS = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
 
 @Controller('users')
 export class UsersController {
@@ -20,10 +27,32 @@ export class UsersController {
   }
 
   @Post()
-  @UseInterceptors(FileInterceptor('photo', { dest: './uploads' }))
+  @UseInterceptors(
+    FileInterceptor('photo', {
+      storage: diskStorage({
+        destination: 'uploads',
+        filename: (req, file, cb) => {
+          const randomName = Array(32)
+            .fill(null)
+            .map(() => Math.round(Math.random() * 16).toString(16))
+            .join('');
+          return cb(null, `${randomName}${extname(file.originalname)}`);
+        },
+      }),
+      limits: { fileSize: FILE_SIZE },
+      fileFilter: (req, file, cb) =>
+        cb(null, SUPPORTED_FORMATS.includes(file.mimetype)),
+    })
+  )
   async createUser(@UploadedFile() file, @Body() user: User) {
     console.log(`file`, file);
     console.log(`user`, user);
     return this.userService.createUser({ photo: file, ...user });
+  }
+
+  @Get('photo/:imgId')
+  test(@Param('imgId') imgId, @Res() res) {
+    const imgPath = imgId;
+    return res.sendFile(imgPath, { root: 'uploads' });
   }
 }

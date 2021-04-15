@@ -8,7 +8,7 @@ import { Button } from '../../../components/Button/Button';
 import { Error, Field, Label } from '../../../components/Form';
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
-const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png'];
+const SUPPORTED_FORMATS = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
 const FILE_SIZE = 1000000 * 3; // in bytes;
 
 export const CreateUserPage: React.FC<{}> = () => {
@@ -29,14 +29,12 @@ export const CreateUserPage: React.FC<{}> = () => {
         .max(50, 'Too Long!')
         .required('Required'),
       photo: Yup.mixed()
+        .required()
         .test('fileSize', 'File Size is too large', (value) => {
-          console.log(`1value`, value);
-          return value.size <= FILE_SIZE;
+          return value?.size && value.size <= FILE_SIZE;
         })
         .test('fileType', 'Unsupported File Format', (value) => {
-          console.log(`2value`, value);
-
-          return SUPPORTED_FORMATS.includes(value.type);
+          return value?.type && SUPPORTED_FORMATS.includes(value.type);
         }),
       lastName: Yup.string()
         .min(2, 'Too Short!')
@@ -116,9 +114,12 @@ export const CreateUserPage: React.FC<{}> = () => {
           onChange={(e) => {
             e?.target?.files?.[0] &&
               formik.setFieldValue('photo', e.target.files[0]);
+            formik.setFieldTouched('photo');
           }}
         />
-        {formik.errors.photo ? <Error>{formik.errors.photo}</Error> : null}
+        {formik.touched.photo && formik.errors.photo ? (
+          <Error>{formik.errors.photo}</Error>
+        ) : null}
       </Field>
 
       {hasErrored ? <Error>Failed to upload</Error> : null}
