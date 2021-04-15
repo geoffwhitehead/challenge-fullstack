@@ -3,8 +3,10 @@ import {
   ReactNode,
   useCallback,
   useContext,
+  useEffect,
   useState,
 } from 'react';
+import { getItem } from '../../helpers/localStorage';
 
 export type AuthContext = {
   isAuthenticated: boolean;
@@ -13,11 +15,11 @@ export type AuthContext = {
 
 const Ctx = createContext<AuthContext>(null);
 
-export function AuthenticatedUserProvider({
+export const AuthenticatedUserProvider = ({
   children,
 }: {
   children: ReactNode;
-}) {
+}) => {
   const [{ isAuthenticated }, setValue] = useState<
     Omit<AuthContext, 'setIsAuthenticated'>
   >({
@@ -29,18 +31,30 @@ export function AuthenticatedUserProvider({
     []
   );
 
+  useEffect(() => {
+    const token = getItem('access_token');
+    if (token !== 'null') setValue({ isAuthenticated: true });
+  }, []);
+
   return (
     <Ctx.Provider value={{ isAuthenticated, setIsAuthenticated }}>
       {children}
     </Ctx.Provider>
   );
-}
+};
 
-export function useAuthenticatedUser() {
-  const { isAuthenticated, setIsAuthenticated } = useContext(Ctx);
+export const useAuthenticatedUser = () => {
+  const ctx = useContext(Ctx);
+
+  if (!ctx)
+    throw new Error(
+      `No Provider. Ensure that the AuthenticatedUserProvider is rendered as a parent before using this hook.`
+    );
+
+  const { isAuthenticated, setIsAuthenticated } = ctx;
 
   return {
     isAuthenticated,
     setIsAuthenticated,
   };
-}
+};
