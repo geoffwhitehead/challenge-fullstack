@@ -1,8 +1,8 @@
 import { useRegisterUser } from 'apps/ui/src/hooks/useRegisterUser';
 import { useFormik } from 'formik';
 import React from 'react';
-import styled from 'styled-components';
 import * as Yup from 'yup';
+import { Error, Field, Label } from '../../components/Form';
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png'];
@@ -54,7 +54,7 @@ export const RegisterPage: React.FC<{}> = () => {
   return (
     <form onSubmit={formik.handleSubmit}>
       <Field>
-        <StyledLabel htmlFor="firstName">First Name</StyledLabel>
+        <Label htmlFor="firstName">First Name</Label>
 
         <input
           id="firstName"
@@ -62,12 +62,12 @@ export const RegisterPage: React.FC<{}> = () => {
           {...formik.getFieldProps('firstName')}
         />
         {formik.touched.firstName && formik.errors.firstName ? (
-          <ValidationError>{formik.errors.firstName}</ValidationError>
+          <Error>{formik.errors.firstName}</Error>
         ) : null}
       </Field>
 
       <Field>
-        <StyledLabel htmlFor="photo">Photo</StyledLabel>
+        <Label htmlFor="photo">Photo</Label>
 
         <input
           id="photo"
@@ -79,13 +79,11 @@ export const RegisterPage: React.FC<{}> = () => {
               formik.setFieldValue('photo', e.target.files[0]);
           }}
         />
-        {formik.errors.photo ? (
-          <ValidationError>{formik.errors.photo}</ValidationError>
-        ) : null}
+        {formik.errors.photo ? <Error>{formik.errors.photo}</Error> : null}
       </Field>
 
       <Field>
-        <StyledLabel htmlFor="lastName">Last Name</StyledLabel>
+        <Label htmlFor="lastName">Last Name</Label>
 
         <input
           id="lastName"
@@ -94,31 +92,31 @@ export const RegisterPage: React.FC<{}> = () => {
         />
 
         {formik.touched.lastName && formik.errors.lastName ? (
-          <ValidationError>{formik.errors.lastName}</ValidationError>
+          <Error>{formik.errors.lastName}</Error>
         ) : null}
       </Field>
 
       <Field>
-        <StyledLabel htmlFor="phone">Phone</StyledLabel>
+        <Label htmlFor="phone">Phone</Label>
 
         <input id="phone" type="text" {...formik.getFieldProps('phone')} />
 
         {formik.touched.phone && formik.errors.phone ? (
-          <ValidationError>{formik.errors.phone}</ValidationError>
+          <Error>{formik.errors.phone}</Error>
         ) : null}
       </Field>
 
       <Field>
-        <StyledLabel htmlFor="email">Email Address</StyledLabel>
+        <Label htmlFor="email">Email Address</Label>
 
         <input id="email" type="text" {...formik.getFieldProps('email')} />
 
         {formik.touched.email && formik.errors.email ? (
-          <ValidationError>{formik.errors.email}</ValidationError>
+          <Error>{formik.errors.email}</Error>
         ) : null}
       </Field>
 
-      {hasErrored ? <ValidationError>Failed to upload</ValidationError> : null}
+      {hasErrored ? <Error>Failed to upload</Error> : null}
 
       <button
         type="submit"
@@ -129,17 +127,3 @@ export const RegisterPage: React.FC<{}> = () => {
     </form>
   );
 };
-
-const Field = styled.div`
-  padding: 0.2rem;
-`;
-
-const StyledLabel = styled.label`
-  display: inline-block;
-  width: 150px;
-`;
-
-const ValidationError = styled.div`
-  font-size: 12px;
-  color: #cd5c5c;
-`;

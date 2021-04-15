@@ -11,3 +11,8 @@ export type User = {
   phone: string;
   photo?: File;
 };
+
+export type UserLoginProps = {
+  email: string;
+  password: string;
+};
