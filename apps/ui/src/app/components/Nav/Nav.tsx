@@ -29,10 +29,12 @@ export const Nav: React.FC<Nav> = ({ routes }) => {
       <AuthContainer>
         {!isAuthenticated && (
           <NavItem key={'/login'} to={'/login'}>
-            <button>Login</button>
+            <StyledButton>Login</StyledButton>
           </NavItem>
         )}
-        {isAuthenticated && <button onClick={logout}>Logout</button>}
+        {isAuthenticated && (
+          <StyledButton onClick={logout}>Logout</StyledButton>
+        )}
       </AuthContainer>
     </Navbar>
   );
@@ -40,6 +42,10 @@ export const Nav: React.FC<Nav> = ({ routes }) => {
 
 const AuthContainer = styled.div`
   margin-left: auto;
+`;
+
+const StyledButton = styled.button`
+  margin: 0.5rem;
 `;
 
 const Navbar = styled.nav`
