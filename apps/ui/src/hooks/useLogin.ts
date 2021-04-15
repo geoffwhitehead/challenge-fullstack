@@ -1,4 +1,4 @@
-import { UserLoginProps } from '@org/types';
+import { UserLoginDto } from '@org/types';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAuthenticatedUser } from '../app/contexts/AuthenticatedContext';
@@ -11,7 +11,7 @@ export const useLogin = () => {
   const { setIsAuthenticated } = useAuthenticatedUser();
   const history = useHistory();
 
-  const login = async (data: UserLoginProps) => {
+  const login = async (data: UserLoginDto) => {
     setIsLoading(true);
     setHasErrored(false);
 

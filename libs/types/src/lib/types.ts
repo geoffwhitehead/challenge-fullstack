@@ -12,7 +12,7 @@ export type User = {
   photo: string;
 };
 
-export type UserCreateProps = {
+export type UserDto = {
   firstName: string;
   lastName: string;
   email: string;
@@ -20,7 +20,7 @@ export type UserCreateProps = {
   photo: File;
 };
 
-export type UserLoginProps = {
+export type UserLoginDto = {
   email: string;
   password: string;
 };
