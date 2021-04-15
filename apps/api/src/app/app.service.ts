@@ -1,28 +1,19 @@
 import { Injectable } from '@nestjs/common';
 
-type User = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  photo?: File;
+type Settings = {
+  users: {
+    active: boolean;
+  };
 };
 
 @Injectable()
 export class AppService {
-  getUsers(): User[] {
-    return [
-      {
-        firstName: 'geoff',
-        lastName: 'whitehead',
-        email: 'geoff1012@gmail.com',
-        phone: '1233454567',
+  /**Some of these routes could be seperated in their own modules */
+  getSettings(): Settings {
+    return {
+      users: {
+        active: true,
       },
-    ];
-  }
-
-  createUser(user: User) {
-    console.log(`user`, user);
-    return true;
+    };
   }
 }

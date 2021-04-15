@@ -8,7 +8,11 @@ export const UsersPage: React.FC<{}> = () => {
   if (hasErrored) {
     return <p>Something has gone wrong... </p>;
   }
+
   return (
-    <div>{isLoading ? <p>Loading...</p> : <UserList users={users} />}</div>
+    <div>
+      <button></button>
+      {isLoading ? <p>Loading...</p> : <UserList users={users} />}
+    </div>
   );
 };
