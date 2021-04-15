@@ -2,6 +2,7 @@ import { useLogin } from 'apps/ui/src/hooks/useLogin';
 import { useFormik } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
+import { Button } from '../../components/Button/Button';
 import { Error, Field, Label } from '../../components/Form';
 
 export const LoginPage: React.FC<{}> = () => {
@@ -55,9 +56,9 @@ export const LoginPage: React.FC<{}> = () => {
 
       {hasErrored ? <Error>Failed to login</Error> : null}
 
-      <button type="submit" disabled={!formik.isValid || isLoading}>
+      <Button type="submit" disabled={!formik.isValid || isLoading}>
         Submit
-      </button>
+      </Button>
     </form>
   );
 };

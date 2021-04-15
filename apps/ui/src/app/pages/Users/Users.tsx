@@ -3,6 +3,7 @@ import { useUsers } from 'apps/ui/src/hooks/useUsers';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { Button } from '../../components/Button/Button';
 import { Error } from '../../components/Error/Error';
 import { Loading } from '../../components/Loading/Loading';
 import { useAuthenticatedUser } from '../../contexts/AuthenticatedContext';
@@ -35,11 +36,11 @@ export const UsersPage: React.FC<{}> = () => {
     <div>
       <Controls>
         <Link to="/users/create">
-          <button>Create user</button>
+          <Button>Create user</Button>
         </Link>
-        <button disabled={!isAuthenticated} onClick={handleUserGridToggle}>
+        <Button disabled={!isAuthenticated} onClick={handleUserGridToggle}>
           {`${isUsersGridEnabled ? 'Disable' : 'Enable'} users grid`}
-        </button>
+        </Button>
       </Controls>
 
       {isUsersGridEnabled ? (

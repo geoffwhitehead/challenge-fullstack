@@ -2,6 +2,7 @@ import { useLogout } from 'apps/ui/src/hooks/useLogout';
 import React from 'react';
 import styled from 'styled-components';
 import { useAuthenticatedUser } from '../../contexts/AuthenticatedContext';
+import { Button } from '../Button/Button';
 import { NavItem } from './NavItem';
 
 type Nav = {
@@ -44,7 +45,7 @@ const AuthContainer = styled.div`
   margin-left: auto;
 `;
 
-const StyledButton = styled.button`
+const StyledButton = styled(Button)`
   margin: 0.5rem;
 `;
 

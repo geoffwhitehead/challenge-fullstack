@@ -1,12 +1,14 @@
+import { User } from '@org/types';
 import React from 'react';
 import { useTable } from 'react-table';
 import styled from 'styled-components';
+import { Button } from '../../../components/Button/Button';
 
-type UserList = {
-  users: any[]; // TODO - pull from lib
+type UserListProps = {
+  users: User[];
 };
 
-export const UserList: React.FC<UserList> = ({ users }) => {
+export const UserList: React.FC<UserListProps> = ({ users }) => {
   const columns = React.useMemo(
     () => [
       {
@@ -28,7 +30,7 @@ export const UserList: React.FC<UserList> = ({ users }) => {
       {
         Header: 'Actions',
         Cell: () => {
-          return <button>View photo</button>;
+          return <Button>View photo</Button>;
         },
       },
     ],
