@@ -26,6 +26,10 @@ export class AppController {
   @UseGuards(LocalAuthGuard)
   @Post('auth/login')
   async login(@Request() req) {
+    console.log(`req.user`, req.user);
+
+    // If password validation through local strategy is successful the user details will be
+    // appended onto the request.
     return this.authService.login(req.user);
   }
 }

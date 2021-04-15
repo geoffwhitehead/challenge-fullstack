@@ -4,7 +4,7 @@ import React from 'react';
 import * as Yup from 'yup';
 import { Error, Field, Label } from '../../components/Form';
 
-export const RegisterPage: React.FC<{}> = () => {
+export const LoginPage: React.FC<{}> = () => {
   const [login, isLoading, hasErrored] = useLogin();
 
   const formik = useFormik({
@@ -13,10 +13,12 @@ export const RegisterPage: React.FC<{}> = () => {
       email: '',
     },
     validationSchema: Yup.object().shape({
-      firstName: Yup.string()
-        .min(2, 'Too Short!')
-        .max(50, 'Too Long!')
-        .required('Required'),
+      password: Yup.string()
+        .required('Required')
+        .matches(
+          /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+          'Must contain 8 characters, one uppercase, one lowercase, one number and one special character'
+        ),
 
       email: Yup.string().email('Invalid email').required('Required'),
     }),
@@ -51,12 +53,9 @@ export const RegisterPage: React.FC<{}> = () => {
         ) : null}
       </Field>
 
-      {hasErrored ? <Error>Failed to upload</Error> : null}
+      {hasErrored ? <Error>Failed to login</Error> : null}
 
-      <button
-        type="submit"
-        disabled={!(formik.isValid && formik.dirty) || isLoading}
-      >
+      <button type="submit" disabled={!formik.isValid || isLoading}>
         Submit
       </button>
     </form>

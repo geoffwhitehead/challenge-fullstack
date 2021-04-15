@@ -1,25 +1,42 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UsersService } from '../users/users.service';
 
+type AuthUserProps = {
+  id: string;
+  email: string;
+  password: string;
+};
 @Injectable()
 export class AuthService {
-  constructor(
-    private usersService: UsersService,
-    private jwtService: JwtService
-  ) {}
+  constructor(private jwtService: JwtService) {}
 
-  async validateUser(username: string, pass: string): Promise<any> {
-    // const user = await this.usersService.findOne(username);
-    // if (user && user.password === pass) {
-    //   const { password, ...result } = user;
-    //   return result;
-    // }
-    // return null;
+  private readonly authUsers: AuthUserProps[] = [
+    {
+      id: '1',
+      email: 'geoff1012@gmail.com',
+      password: 'Password1!', // In prod this would be hashed using something like bcrypt or argon2
+    },
+  ];
+
+  async validateUser(
+    email: string,
+    password: string
+  ): Promise<AuthUserProps | false> {
+    // TODO: Here you would check the user details against a record in the db
+
+    const user = this.authUsers.find(
+      (user) => user.email === email && user.password === password
+    );
+
+    if (user) {
+      return user;
+    }
+    return false;
   }
 
-  async login(user: any) {
-    const payload = { email: user.email, sub: user.userId };
+  async login(user: AuthUserProps) {
+    console.log('LOGGING IN');
+    const payload = { email: user.email, sub: user.id };
     return {
       access_token: this.jwtService.sign(payload),
     };

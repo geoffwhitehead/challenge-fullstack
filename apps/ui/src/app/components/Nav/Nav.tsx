@@ -1,3 +1,5 @@
+import { useIsAuthenticated } from 'apps/ui/src/hooks/useIsAuthenticated';
+import { useLogout } from 'apps/ui/src/hooks/useLogout';
 import React from 'react';
 import styled from 'styled-components';
 import { NavItem } from './NavItem';
@@ -12,6 +14,9 @@ type RouteItem = {
 };
 
 export const Nav: React.FC<Nav> = ({ routes }) => {
+  const [isAuthenticated] = useIsAuthenticated();
+  const [logout] = useLogout();
+
   return (
     <Navbar>
       {routes.map((route) => {
@@ -21,14 +26,26 @@ export const Nav: React.FC<Nav> = ({ routes }) => {
           </NavItem>
         );
       })}
+      <AuthContainer>
+        {!isAuthenticated && (
+          <NavItem key={'/login'} to={'/login'}>
+            <button>Login</button>
+          </NavItem>
+        )}
+        {isAuthenticated && <button onClick={logout}>Logout</button>}
+      </AuthContainer>
     </Navbar>
   );
 };
 
+const AuthContainer = styled.div`
+  margin-left: auto;
+`;
+
 const Navbar = styled.nav`
   background: whiteSmoke;
-  color: white;
   display: flex;
   height: 60px;
+  width: '100%';
   align-items: center;
 `;
