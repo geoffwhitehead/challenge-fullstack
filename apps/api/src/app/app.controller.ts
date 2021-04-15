@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
+import { Settings } from '@org/types';
 import { AuthService } from '../auth/auth.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { LocalAuthGuard } from '../auth/local-auth.guard';
@@ -18,9 +26,9 @@ export class AppController {
 
   @UseGuards(JwtAuthGuard)
   @Post('settings')
-  async postSettings() {
-    // TODO
-    return true;
+  async postSettings(@Body() settings: Settings) {
+    // TODO: update and return from db
+    return settings;
   }
 
   @UseGuards(LocalAuthGuard)

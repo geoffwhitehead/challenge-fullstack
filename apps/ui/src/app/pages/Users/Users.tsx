@@ -1,3 +1,4 @@
+import { useUpdateSettings } from 'apps/ui/src/hooks/useUpdateSettings';
 import { useUsers } from 'apps/ui/src/hooks/useUsers';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -12,17 +13,23 @@ export const UsersPage: React.FC<{}> = () => {
   const { users, isLoading, hasErrored } = useUsers();
   const { isAuthenticated } = useAuthenticatedUser();
   const { settings } = useSettings();
+  const { updateSettings, ...updateSettingsHook } = useUpdateSettings();
 
-  if (hasErrored) {
+  if (hasErrored || updateSettingsHook.hasErrored) {
     return <Error />;
   }
 
-  if (isLoading) {
+  if (isLoading || updateSettingsHook.isLoading) {
     return <Loading />;
   }
 
   const isUsersGridEnabled = settings?.users?.isActive;
-  const handleUserGridToggle = () => {};
+
+  const handleUserGridToggle = () =>
+    updateSettings({
+      ...settings,
+      users: { ...settings.users, isActive: !settings.users.isActive },
+    });
 
   return (
     <div>

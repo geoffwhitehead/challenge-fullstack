@@ -8,7 +8,7 @@ import { setItem } from '../helpers/localStorage';
 export const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasErrored, setHasErrored] = useState(false);
-  const { isAuthenticated, setIsAuthenticated } = useAuthenticatedUser();
+  const { setIsAuthenticated } = useAuthenticatedUser();
   const history = useHistory();
 
   const login = async (data: UserLoginProps) => {

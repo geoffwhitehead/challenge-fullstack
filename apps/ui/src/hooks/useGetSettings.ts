@@ -22,5 +22,5 @@ export const useGetSettings = () => {
 
     fetchData();
   }, [setSettings, setIsLoading, setHasErrored]);
-  return { settings, isLoading, hasErrored };
+  return { settings, setSettings, isLoading, hasErrored };
 };
