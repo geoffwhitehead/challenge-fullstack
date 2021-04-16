@@ -33,6 +33,6 @@ Run `yarn dev ui` in the root directory.
 - Add CI/CD pipeline
 - Improve UI styling
 - Improve logging
-- Refresh / sessions tokens
-- Create asset table to store upload and reference on user.
+- Refresh / session tokens
+- Create asset table to store uploads and reference these on the user entity.
 - Store auth users credentials in db.
