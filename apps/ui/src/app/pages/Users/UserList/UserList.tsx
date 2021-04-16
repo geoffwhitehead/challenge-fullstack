@@ -35,7 +35,7 @@ export const UserList: React.FC<UserListProps> = ({ users }) => {
             <Button
               onClick={() =>
                 window.open(
-                  `${config.baseUrl}/users/photo/${a.row.original.photo}`,
+                  `${config.apiUrl}/users/photo/${a.row.original.photo}`,
                   '_blank'
                 )
               }

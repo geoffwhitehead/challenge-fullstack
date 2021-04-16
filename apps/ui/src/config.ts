@@ -1,9 +1,9 @@
 type Config = {
-  baseUrl: string;
+  apiUrl: string;
   environment: string;
 };
 
 export const config: Config = {
-  baseUrl: process.env.HOST || 'http://localhost:3333',
+  apiUrl: process.env.API_URL || 'http://localhost:3333',
   environment: process.env.NODE_ENV,
 };

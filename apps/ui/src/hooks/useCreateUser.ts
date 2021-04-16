@@ -17,7 +17,7 @@ export const useCreateUser = () => {
     formData.append('phone', data.phone);
     formData.append('email', data.email);
 
-    const response = await fetch(`${config.baseUrl}/users`, {
+    const response = await fetch(`${config.apiUrl}/users`, {
       method: 'POST',
       body: formData,
     });

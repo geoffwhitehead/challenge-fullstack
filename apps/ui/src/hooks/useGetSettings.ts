@@ -10,7 +10,7 @@ export const useGetSettings = () => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const response = await fetch(`${config.baseUrl}/settings`);
+      const response = await fetch(`${config.apiUrl}/settings`);
       const result = await response.json();
       if (response.ok) {
         setSettings(result);

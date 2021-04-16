@@ -15,7 +15,7 @@ export const useUpdateSettings = () => {
     setIsLoading(true);
     setHasErrored(false);
 
-    const response = await fetch(`${config.baseUrl}/settings`, {
+    const response = await fetch(`${config.apiUrl}/settings`, {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {

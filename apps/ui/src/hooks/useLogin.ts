@@ -15,7 +15,7 @@ export const useLogin = () => {
     setIsLoading(true);
     setHasErrored(false);
 
-    const response = await fetch(`${config.baseUrl}/auth/login`, {
+    const response = await fetch(`${config.apiUrl}/auth/login`, {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {

@@ -10,7 +10,7 @@ export const useUsers = () => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const response = await fetch(`${config.baseUrl}/users`);
+      const response = await fetch(`${config.apiUrl}/users`);
       const result = await response.json();
       if (response.ok) {
         setUsers(result);
