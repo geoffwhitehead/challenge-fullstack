@@ -26,11 +26,12 @@ export const UsersPage: React.FC<{}> = () => {
 
   const isUsersGridEnabled = settings?.isUsersGridActive;
 
-  const handleUserGridToggle = () =>
+  const handleUserGridToggle = () => {
     updateSettings({
       ...settings,
       isUsersGridActive: !settings.isUsersGridActive,
     });
+  };
 
   return (
     <div>

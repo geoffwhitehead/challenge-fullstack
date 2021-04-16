@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { parse } from 'pg-connection-string';
 
 @Module({
   imports: [
@@ -8,13 +9,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
+        const dbConf = parse(configService.get('dbUrl'));
+
+        console.log(`dbConf`, dbConf);
         return {
           type: 'postgres',
-          host: configService.get('dbHost'),
-          port: configService.get('dbPort'),
-          username: configService.get('dbUser'),
-          password: configService.get('dbPassword'),
-          database: configService.get('dbName'),
+          host: dbConf.host,
+          port: parseInt(dbConf.port, 10),
+          username: dbConf.user,
+          password: dbConf.password,
+          database: dbConf.database,
           synchronize: true,
           autoLoadEntities: true,
         };

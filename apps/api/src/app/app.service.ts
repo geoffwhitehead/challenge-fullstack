@@ -26,16 +26,12 @@ export class AppService {
   async updateSettings(settings: Partial<Settings>): Promise<Settings> {
     const globalSettings = await this.settingsRepository.findOne();
 
-    console.log(`globalRecord`, globalSettings);
-    console.log(`settings`, settings);
-
     if (!globalSettings) {
       const newGlobalSettings = this.settingsRepository.create({
         ...settings,
       });
       return omit(await this.settingsRepository.save(newGlobalSettings), 'id');
     } else {
-      // TODO: possible to combine update and return into single op?
       await this.settingsRepository.update(
         { id: globalSettings.id },
         { ...globalSettings, ...settings }
@@ -43,7 +39,6 @@ export class AppService {
 
       const updated = await this.settingsRepository.findOne();
 
-      console.log(`updated`, updated);
       return omit(updated, 'id');
     }
   }
