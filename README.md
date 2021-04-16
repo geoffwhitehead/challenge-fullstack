@@ -14,7 +14,7 @@ Nx is used to scaffold the monorepo with the api built using nest js, and ui in 
 
 Hosted with heroku at `https://fullstack-gw.herokuapp.com/`.
 
-The ui is statically hosted from `/` and the api is accessed from `https://fullstack-gw.herokuapp.com/api`
+The ui is statically hosted from `/` and the api is accessed from `https://fullstack-gw.herokuapp.com/api`.
 
 ## Running locally
 
@@ -30,5 +30,9 @@ Run `yarn dev ui` in the root directory.
 
 - Add tests throughout
 - Store the images in an asset store like S3
+- Add CI/CD pipeline
 - Improve UI styling
 - Improve logging
+- Refresh / sessions tokens
+- Create asset table to store upload and reference on user.
+- Store auth users credentials in db.
