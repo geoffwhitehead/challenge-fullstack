@@ -27,15 +27,12 @@ export class AppController {
   @UseGuards(JwtAuthGuard)
   @Post('settings')
   async postSettings(@Body() settings: Settings) {
-    // TODO: update and return from db
-    return settings;
+    return this.appService.updateSettings(settings);
   }
 
   @UseGuards(LocalAuthGuard)
   @Post('auth/login')
   async login(@Request() req) {
-    console.log(`req.user`, req.user);
-
     // If password validation through local strategy is successful the user details will be
     // appended onto the request.
     return this.authService.login(req.user);

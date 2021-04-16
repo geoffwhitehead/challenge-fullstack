@@ -23,7 +23,6 @@ export class AuthService {
     password: string
   ): Promise<AuthUserProps | false> {
     // TODO: Here you would check the user details against a record in the db
-
     const user = this.authUsers.find(
       (user) => user.email === email && user.password === password
     );
@@ -35,7 +34,6 @@ export class AuthService {
   }
 
   async login(user: AuthUserProps) {
-    console.log('LOGGING IN');
     const payload = { email: user.email, sub: user.id };
     return {
       access_token: this.jwtService.sign(payload),

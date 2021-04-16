@@ -1,7 +1,6 @@
 export type Settings = {
-  users: {
-    isActive: boolean;
-  };
+  id?: string;
+  isUsersGridActive: boolean;
 };
 
 export type User = {

@@ -24,8 +24,6 @@ export const useUpdateSettings = () => {
       },
     });
 
-    console.log(`response`, response);
-
     if (response.status === 401) {
       // token expired - redirect to login - refresh / sessions token not implemented
       history.push('/login');
@@ -35,7 +33,6 @@ export const useUpdateSettings = () => {
       setHasErrored(true);
     } else {
       const updatedSettings = await response.json();
-      console.log(`updatedSettings`, updatedSettings);
       // update local cache of settings with settings returned from api
       setSettings(updatedSettings);
     }
