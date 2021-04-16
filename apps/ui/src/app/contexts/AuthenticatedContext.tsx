@@ -26,15 +26,14 @@ export const AuthenticatedUserProvider = ({
     isAuthenticated: false,
   });
 
-  const setIsAuthenticated = useCallback(
-    (isAuthenticated: boolean) => setValue({ isAuthenticated }),
-    []
-  );
+  const setIsAuthenticated = useCallback((isAuthenticated: boolean) => {
+    console.log(`callback isauth`, isAuthenticated);
+    setValue({ isAuthenticated });
+  }, []);
 
   useEffect(() => {
     const token = getItem('access_token');
-    if (token !== 'null') setValue({ isAuthenticated: true });
-    console.log(`token`, token);
+    if (token !== null) setValue({ isAuthenticated: true });
   }, []);
 
   return (
@@ -47,7 +46,6 @@ export const AuthenticatedUserProvider = ({
 export const useAuthenticatedUser = () => {
   const ctx = useContext(Ctx);
 
-  console.log(`ctx`, ctx);
   if (!ctx)
     throw new Error(
       `No Provider. Ensure that the AuthenticatedUserProvider is rendered as a parent before using this hook.`
