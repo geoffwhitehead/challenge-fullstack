@@ -11,7 +11,6 @@ import { parse } from 'pg-connection-string';
       useFactory: (configService: ConfigService) => {
         const dbConf = parse(configService.get('dbUrl'));
 
-        console.log(`dbConf`, dbConf);
         return {
           type: 'postgres',
           host: dbConf.host,
@@ -21,6 +20,7 @@ import { parse } from 'pg-connection-string';
           database: dbConf.database,
           synchronize: true,
           autoLoadEntities: true,
+          ssl: configService.get('dbSsl'),
         };
       },
     }),
