@@ -14,7 +14,9 @@ Nx is used to scaffold the monorepo with the api built using nest js, and ui in 
 
 Hosted with heroku at `https://fullstack-gw.herokuapp.com/`.
 
-The ui is statically hosted from `/` and the api is accessed from `https://fullstack-gw.herokuapp.com/api`.
+The ui is statically hosted from `/` and the api is accessed from `/api`.
+
+For enabling / disabling the users grid. `user: user@test.com / password: Password1!`
 
 ## Running locally
 

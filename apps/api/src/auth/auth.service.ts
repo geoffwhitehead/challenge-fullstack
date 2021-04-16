@@ -13,8 +13,8 @@ export class AuthService {
   private readonly authUsers: AuthUserProps[] = [
     {
       id: '1',
-      email: 'geoff1012@gmail.com',
-      password: 'Password1!', // In prod this would be hashed using something like bcrypt or argon2
+      email: 'user@test.com',
+      password: 'Password1!', // This would be hashed in the db using something like bcrypt or argon2
     },
   ];
 
@@ -22,7 +22,7 @@ export class AuthService {
     email: string,
     password: string
   ): Promise<AuthUserProps | false> {
-    // TODO: Here you would check the user details against a record in the db
+    // TODO: Here you would check the user details against a record in the db.
     const user = this.authUsers.find(
       (user) => user.email === email && user.password === password
     );
