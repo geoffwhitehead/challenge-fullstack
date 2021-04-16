@@ -8,7 +8,7 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app/app.module';
-import { config } from './config';
+import { config } from './config/config';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -25,8 +25,8 @@ async function bootstrap() {
 
   SwaggerModule.setup('/', app, document);
 
-  await app.listen(config.port, () => {
-    Logger.log('Listening on ' + config.port);
+  await app.listen(config().port, () => {
+    Logger.log('Listening on ' + config().port);
   });
 }
 

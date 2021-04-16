@@ -9,7 +9,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { User } from '@org/types';
+import { UserDto } from '@org/types';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { UsersService } from './users.service';
@@ -44,8 +44,8 @@ export class UsersController {
         cb(null, SUPPORTED_FORMATS.includes(file.mimetype)),
     })
   )
-  async createUser(@UploadedFile() file, @Body() user: Omit<User, 'photo'>) {
-    // TODO: save all file info in asset records
+  async createUser(@UploadedFile() file, @Body() user: Omit<UserDto, 'photo'>) {
+    // TODO: save all file info in asset record
     return this.userService.createUser({ photo: file.filename, ...user });
   }
 
