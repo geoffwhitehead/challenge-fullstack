@@ -10,7 +10,7 @@
     "dev": "nx serve",
     "dev:all": "nx run-many --target=serve --projects=ui,api --parallel",
     "start": "node dist/apps/api/main.js",
-    "build": "nx build",
+    "build": "nx build ui && nx build api",
     "test": "nx test",
     "lint": "nx workspace-lint && nx lint",
     "e2e": "nx e2e",
