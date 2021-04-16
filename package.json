@@ -9,7 +9,7 @@
     "nx": "nx",
     "dev": "nx serve",
     "dev:all": "nx run-many --target=serve --projects=ui,api --parallel",
-    "start": "node dist/apps/api/main",
+    "start": "node dist/apps/api/main.js",
     "build": "nx build",
     "test": "nx test",
     "lint": "nx workspace-lint && nx lint",
