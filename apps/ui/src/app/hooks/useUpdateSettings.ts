@@ -1,9 +1,9 @@
 import { Settings } from '@org/types';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSettings } from '../app/contexts/SettingsContext';
-import { config } from '../config';
-import { getItem } from '../helpers/localStorage';
+import { config } from '../../config';
+import { getItem } from '../../helpers/localStorage';
+import { useSettings } from '../contexts/SettingsContext';
 
 export const useUpdateSettings = () => {
   const [isLoading, setIsLoading] = useState(false);

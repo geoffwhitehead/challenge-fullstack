@@ -1,8 +1,8 @@
 import { Settings } from '@org/types';
 import { createContext, ReactNode, useContext } from 'react';
-import { useGetSettings } from '../../hooks/useGetSettings';
 import { Error as ErrorComponent } from '../components/Error/Error';
 import { Loading } from '../components/Loading/Loading';
+import { useGetSettings } from '../hooks/useGetSettings';
 
 export type SettingsContext = {
   settings: Settings;

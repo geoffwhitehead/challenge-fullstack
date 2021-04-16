@@ -1,5 +1,3 @@
-import { useUpdateSettings } from 'apps/ui/src/hooks/useUpdateSettings';
-import { useUsers } from 'apps/ui/src/hooks/useUsers';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -8,6 +6,8 @@ import { Error } from '../../components/Error/Error';
 import { Loading } from '../../components/Loading/Loading';
 import { useAuthenticatedUser } from '../../contexts/AuthenticatedContext';
 import { useSettings } from '../../contexts/SettingsContext';
+import { useUpdateSettings } from '../../hooks/useUpdateSettings';
+import { useUsers } from '../../hooks/useUsers';
 import { UserList } from './UserList/UserList';
 
 export const UsersPage: React.FC<{}> = () => {

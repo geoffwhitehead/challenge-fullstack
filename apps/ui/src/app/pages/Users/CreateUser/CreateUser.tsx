@@ -1,4 +1,3 @@
-import { useCreateUser } from 'apps/ui/src/hooks/useCreateUser';
 import { useFormik } from 'formik';
 import React from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
@@ -6,6 +5,7 @@ import styled from 'styled-components';
 import * as Yup from 'yup';
 import { Button } from '../../../components/Button/Button';
 import { Error, Field, Label } from '../../../components/Form';
+import { useCreateUser } from '../../../hooks/useCreateUser';
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const SUPPORTED_FORMATS = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];

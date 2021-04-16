@@ -1,7 +1,7 @@
-import { useLogout } from 'apps/ui/src/hooks/useLogout';
 import React from 'react';
 import styled from 'styled-components';
 import { useAuthenticatedUser } from '../../contexts/AuthenticatedContext';
+import { useLogout } from '../../hooks/useLogout';
 import { Button } from '../Button/Button';
 import { NavItem } from './NavItem';
 

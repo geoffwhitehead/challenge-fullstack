@@ -1,19 +1,19 @@
-import { Settings } from '@org/types';
+import { User } from '@org/types';
 import { useEffect, useState } from 'react';
-import { config } from '../config';
+import { config } from '../../config';
 
-export const useGetSettings = () => {
-  const [settings, setSettings] = useState<Settings>();
+export const useUsers = () => {
+  const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasErrored, setHasErrored] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const response = await fetch(`${config.apiUrl}/settings`);
+      const response = await fetch(`${config.apiUrl}/users`);
       const result = await response.json();
       if (response.ok) {
-        setSettings(result);
+        setUsers(result);
       } else {
         setHasErrored(true);
       }
@@ -21,6 +21,6 @@ export const useGetSettings = () => {
     };
 
     fetchData();
-  }, [setSettings, setIsLoading, setHasErrored]);
-  return { settings, setSettings, isLoading, hasErrored };
+  }, [setUsers, setIsLoading]);
+  return { users, isLoading, hasErrored };
 };

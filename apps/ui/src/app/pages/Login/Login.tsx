@@ -1,9 +1,9 @@
-import { useLogin } from 'apps/ui/src/hooks/useLogin';
 import { useFormik } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
 import { Button } from '../../components/Button/Button';
 import { Error, Field, Label } from '../../components/Form';
+import { useLogin } from '../../hooks/useLogin';
 
 export const LoginPage: React.FC<{}> = () => {
   const [login, isLoading, hasErrored] = useLogin();

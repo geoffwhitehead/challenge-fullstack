@@ -1,6 +1,6 @@
 import { useHistory } from 'react-router-dom';
-import { useAuthenticatedUser } from '../app/contexts/AuthenticatedContext';
-import { setItem } from '../helpers/localStorage';
+import { setItem } from '../../helpers/localStorage';
+import { useAuthenticatedUser } from '../contexts/AuthenticatedContext';
 
 export const useLogout = () => {
   const { setIsAuthenticated } = useAuthenticatedUser();

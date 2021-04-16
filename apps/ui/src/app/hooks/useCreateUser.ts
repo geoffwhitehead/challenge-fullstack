@@ -1,6 +1,6 @@
 import { UserDto } from '@org/types';
 import { useState } from 'react';
-import { config } from '../config';
+import { config } from '../../config';
 
 export const useCreateUser = () => {
   const [isLoading, setIsLoading] = useState(false);

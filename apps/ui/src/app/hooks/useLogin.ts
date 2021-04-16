@@ -1,9 +1,9 @@
 import { UserLoginDto } from '@org/types';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useAuthenticatedUser } from '../app/contexts/AuthenticatedContext';
-import { config } from '../config';
-import { setItem } from '../helpers/localStorage';
+import { useAuthenticatedUser } from '../../app/contexts/AuthenticatedContext';
+import { config } from '../../config';
+import { setItem } from '../../helpers/localStorage';
 
 export const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
