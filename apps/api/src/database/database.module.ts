@@ -20,7 +20,9 @@ import { parse } from 'pg-connection-string';
           database: dbConf.database,
           synchronize: true,
           autoLoadEntities: true,
-          ssl: configService.get('dbSsl'),
+          ssl: {
+            rejectUnauthorized: false,
+          },
         };
       },
     }),
