@@ -29,5 +29,6 @@ Run `yarn dev ui` in the root directory.
 # Future improvements
 
 - Add tests throughout
+- Store the images in an asset store like S3
 - Improve UI styling
 - Improve logging
