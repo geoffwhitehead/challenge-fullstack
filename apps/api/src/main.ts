@@ -14,6 +14,8 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableCors();
 
+  app.setGlobalPrefix('api');
+
   const swaggerOpts = new DocumentBuilder()
     .setTitle('fullstack')
     .setDescription('fullstack')

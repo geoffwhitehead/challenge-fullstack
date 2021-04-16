@@ -4,6 +4,6 @@ type Config = {
 };
 
 export const config: Config = {
-  apiUrl: process.env.NX_API_URL || 'http://localhost:3333',
+  apiUrl: process.env.NX_API_URL || 'http://localhost:3333/api',
   environment: process.env.NODE_ENV,
 };
