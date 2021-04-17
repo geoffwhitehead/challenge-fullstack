@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
+import { AssetsModule } from '../assets/assets.module';
 import { AuthModule } from '../auth/auth.module';
 import { config } from '../config/config';
 import { DatabaseModule } from '../database/database.module';
@@ -15,6 +16,7 @@ import { SettingsEntity } from './settings.entity';
   imports: [
     TypeOrmModule.forFeature([SettingsEntity]),
     UsersModule,
+    AssetsModule,
     AuthModule,
     DatabaseModule,
     ConfigModule.forRoot({

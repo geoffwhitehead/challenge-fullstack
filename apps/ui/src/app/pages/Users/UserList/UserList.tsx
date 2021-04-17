@@ -1,5 +1,4 @@
 import { User } from '@org/types';
-import { config } from 'apps/ui/src/config';
 import React from 'react';
 import { useTable } from 'react-table';
 import styled from 'styled-components';
@@ -34,10 +33,7 @@ export const UserList: React.FC<UserListProps> = ({ users }) => {
           return (
             <Button
               onClick={() =>
-                window.open(
-                  `${config.apiUrl}/users/photo/${a.row.original.photo}`,
-                  '_blank'
-                )
+                window.open(a.row.original.photo.location, '_blank')
               }
             >
               View photo

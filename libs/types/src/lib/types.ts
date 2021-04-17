@@ -8,7 +8,16 @@ export type User = {
   lastName: string;
   email: string;
   phone: string;
-  photo: string;
+  photo: number | Asset;
+};
+
+export type Asset = {
+  id: number;
+  mimetype: string;
+  size: number;
+  bucket: string;
+  key: string;
+  location: string;
 };
 
 export type UserDto = {

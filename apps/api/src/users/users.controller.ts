@@ -17,6 +17,16 @@ import { UsersService } from './users.service';
 const FILE_SIZE = 1000000 * 3; // in bytes;
 const SUPPORTED_FORMATS = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
 
+export type UploadedFile = {
+  fieldname: string;
+  originalname: string;
+  encoding: string;
+  mimetype: string;
+  destination: string;
+  filename: string;
+  path: string;
+  size: number;
+};
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
@@ -44,9 +54,11 @@ export class UsersController {
         cb(null, SUPPORTED_FORMATS.includes(file.mimetype)),
     })
   )
-  async createUser(@UploadedFile() file, @Body() user: Omit<UserDto, 'photo'>) {
-    // TODO: save all file info in asset record
-    return this.userService.createUser({ photo: file.filename, ...user });
+  async createUser(
+    @UploadedFile() file: UploadedFile,
+    @Body() user: Omit<UserDto, 'photo'>
+  ) {
+    return this.userService.createUser({ photo: file, user: user });
   }
 
   @Get('photo/:imgId')

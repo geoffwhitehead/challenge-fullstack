@@ -1,4 +1,12 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { AssetEntity } from '../assets/asset.entity';
 
 @Entity()
 export class UserEntity {
@@ -18,6 +26,7 @@ export class UserEntity {
   @Column()
   phone: string;
 
-  @Column()
-  photo: string;
+  @OneToOne(() => AssetEntity)
+  @JoinColumn()
+  photo: number;
 }

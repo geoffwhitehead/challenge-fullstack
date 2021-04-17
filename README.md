@@ -18,6 +18,8 @@ The ui is statically hosted from `/` and the api is accessed from `/api`.
 
 For enabling / disabling the users grid. `user: user@test.com / password: Password1!`
 
+**Note: JWT's are used for authentication with an expiry of 60s. Session / refresh token haven't been implemented so redirection to the login page will occur when trying to update the user grid with an expired token.**
+
 ## Running locally
 
 ### Backend services
@@ -31,10 +33,9 @@ Run `yarn dev ui` in the root directory.
 # Future improvements
 
 - Add tests throughout
-- Store the images in an asset store like S3
 - Add CI/CD pipeline
 - Improve UI styling
 - Improve logging
 - Refresh / session tokens
-- Create asset table to store uploads and reference these on the user entity.
+- Use multer-s3 to immediately store assets in s3
 - Store auth users credentials in db.

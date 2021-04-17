@@ -26,8 +26,6 @@ export const LoginPage: React.FC<{}> = () => {
     onSubmit: (values) => login(values),
   });
 
-  console.log(`formik.values`, formik.values);
-  console.log(`formik.errors`, formik.errors);
   return (
     <form onSubmit={formik.handleSubmit}>
       <Field>
