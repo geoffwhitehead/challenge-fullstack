@@ -20,11 +20,17 @@ For enabling / disabling the users grid. `user: user@test.com / password: Passwo
 
 **Note: JWT's are used for authentication with an expiry of 60s. Session / refresh token haven't been implemented so redirection to the login page will occur when trying to update the user grid with an expired token.**
 
+## API Docs / Swagger
+
+You can view the swagger docs by navigating to `<baseUrl>/api`.
+
 ## Running locally
 
 ### Backend services
 
 Run `docker-compose up` in the root directory. This will host the node server on `localhost:3333` and postgres on `localhost:5432`
+
+You can also serve the api using nx with `yarn dev api` (docker isnt configured to rebuild on code changes).
 
 ### Front end
 

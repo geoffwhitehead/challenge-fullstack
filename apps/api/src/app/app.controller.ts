@@ -6,12 +6,15 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
+import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Settings } from '@org/types';
 import { AuthService } from '../auth/auth.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { LocalAuthGuard } from '../auth/local-auth.guard';
 import { AppService } from './app.service';
+import { SettingsEntity } from './settings.entity';
 
+@ApiTags('/')
 @Controller()
 export class AppController {
   constructor(
@@ -20,16 +23,33 @@ export class AppController {
   ) {}
 
   @Get('settings')
+  @ApiResponse({
+    status: 200,
+    description: 'The global app settings',
+    type: SettingsEntity,
+  })
   async getSettings() {
     return this.appService.getSettings();
   }
 
   @UseGuards(JwtAuthGuard)
+  @ApiResponse({ status: 401, description: 'Unauthorized.' })
+  @ApiResponse({
+    status: 200,
+    description: 'The updated global app settings',
+    type: SettingsEntity,
+  })
+  @ApiBody({ type: SettingsEntity })
   @Post('settings')
   async postSettings(@Body() settings: Settings) {
     return this.appService.updateSettings(settings);
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'The JWT token',
+  })
+  @ApiResponse({ status: 401, description: 'Unauthorized.' })
   @UseGuards(LocalAuthGuard)
   @Post('auth/login')
   async login(@Request() req) {

@@ -7,12 +7,14 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { UserDto } from '@org/types';
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { User, UserDto } from '@org/types';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { UserEntity } from './user.entity';
 import { UsersService } from './users.service';
 
-const FILE_SIZE = 1000000 * 3; // in bytes;
+const MAX_FILE_SIZE = 1000000 * 3; // in bytes;
 const SUPPORTED_FORMATS = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
 
 export type UploadedFile = {
@@ -25,16 +27,31 @@ export type UploadedFile = {
   path: string;
   size: number;
 };
+
+@ApiTags('/users')
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
+  @ApiOperation({ summary: 'Get users' })
+  @ApiResponse({
+    status: 200,
+    description: 'Array of users',
+    type: UserEntity,
+  })
   @Get()
-  async getUsers() {
+  async getUsers(): Promise<User[]> {
     return this.userService.getUsers();
   }
 
   @Post()
+  @ApiOperation({ summary: 'Create user' })
+  @ApiBody({ type: UserEntity })
+  @ApiResponse({
+    status: 200,
+    description: 'The created user',
+    type: UserEntity,
+  })
   @UseInterceptors(
     FileInterceptor('photo', {
       storage: diskStorage({
@@ -47,7 +64,7 @@ export class UsersController {
           return cb(null, `${randomName}${extname(file.originalname)}`);
         },
       }),
-      limits: { fileSize: FILE_SIZE },
+      limits: { fileSize: MAX_FILE_SIZE },
       fileFilter: (req, file, cb) =>
         cb(null, SUPPORTED_FORMATS.includes(file.mimetype)),
     })
