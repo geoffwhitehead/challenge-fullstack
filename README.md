@@ -28,9 +28,11 @@ You can view the swagger docs by navigating to `<baseUrl>/api`.
 
 ### Backend services
 
-Run `docker-compose up` in the root directory. This will host the node server on `localhost:3333` and postgres on `localhost:5432`
+1. Build the docker image by running `yarn nx deploy api`
 
-You can also serve the api using nx with `yarn dev api` (docker isnt configured to rebuild on code changes).
+2. Run `docker-compose up` in the root directory. This will host the node server on `localhost:3333` and postgres on `localhost:5432`
+
+Note: You can also serve the api using nx with `yarn dev api` (docker isnt configured to rebuild on code changes).
 
 ### Front end
 
