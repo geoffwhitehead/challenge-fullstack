@@ -40,7 +40,7 @@ export class AppController {
   })
   @ApiBody({ type: SettingsEntity })
   @Post('settings')
-  async updateSettings(@Body() settings: SettingsEntity) {
+  async updateSettings(@Body() settings: Omit<SettingsEntity, 'id'>) {
     return this.appService.updateSettings(settings);
   }
 

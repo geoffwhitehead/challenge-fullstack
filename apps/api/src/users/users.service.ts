@@ -26,7 +26,7 @@ export class UsersService {
     return this.usersRepository.find({ relations: ['photo'] });
   }
 
-  async createUser({ user, photo }: CreateUserParams): Promise<User> {
+  async createUser({ user, photo }: CreateUserParams): Promise<UserEntity> {
     const asset = await this.assetsService.createAsset({
       asset: photo,
       cannedAcl: 'public-read',
