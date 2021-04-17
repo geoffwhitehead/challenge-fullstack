@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Settings } from '@org/types';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
-export class SettingsEntity {
+export class SettingsEntity implements Settings {
   @PrimaryGeneratedColumn()
   id: number;
 

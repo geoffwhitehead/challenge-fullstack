@@ -1,9 +1,10 @@
 export type Settings = {
-  id?: string;
+  id?: number;
   isUsersGridActive: boolean;
 };
 
 export type User = {
+  id: number;
   firstName: string;
   lastName: string;
   email: string;

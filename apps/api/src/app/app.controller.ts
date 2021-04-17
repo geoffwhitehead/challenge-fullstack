@@ -7,7 +7,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Settings } from '@org/types';
 import { AuthService } from '../auth/auth.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { LocalAuthGuard } from '../auth/local-auth.guard';
@@ -41,7 +40,7 @@ export class AppController {
   })
   @ApiBody({ type: SettingsEntity })
   @Post('settings')
-  async updateSettings(@Body() settings: Settings) {
+  async updateSettings(@Body() settings: SettingsEntity) {
     return this.appService.updateSettings(settings);
   }
 

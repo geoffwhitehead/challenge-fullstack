@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User, UserDto } from '@org/types';
+import { UserDto } from '@org/types';
 import * as fs from 'fs';
 import { Repository } from 'typeorm';
 import { AssetsService } from '../assets/assets.service';
@@ -17,12 +17,12 @@ type CreateUserParams = {
 export class UsersService {
   constructor(
     @InjectRepository(UserEntity)
-    private usersRepository: Repository<User>,
+    private usersRepository: Repository<UserEntity>,
     private assetsService: AssetsService,
     private configService: ConfigService
   ) {}
 
-  async getUsers(): Promise<User[]> {
+  async getUsers(): Promise<UserEntity[]> {
     return this.usersRepository.find({ relations: ['photo'] });
   }
 

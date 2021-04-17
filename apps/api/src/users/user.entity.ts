@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { User } from '@org/types';
 import {
   Column,
   Entity,
@@ -10,7 +11,7 @@ import {
 import { AssetEntity } from '../assets/asset.entity';
 
 @Entity()
-export class UserEntity {
+export class UserEntity implements User {
   @PrimaryGeneratedColumn()
   @ApiProperty({ example: 123, description: 'The user id' })
   id: number;

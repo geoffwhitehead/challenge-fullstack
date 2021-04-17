@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { User, UserDto } from '@org/types';
+import { UserDto } from '@org/types';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { UserEntity } from './user.entity';
@@ -40,7 +40,7 @@ export class UsersController {
     type: UserEntity,
   })
   @Get()
-  async getUsers(): Promise<User[]> {
+  async getUsers(): Promise<UserEntity[]> {
     return this.userService.getUsers();
   }
 

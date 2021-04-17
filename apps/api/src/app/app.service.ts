@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Settings } from '@org/types';
 import { omit } from 'lodash';
 import { Repository } from 'typeorm';
 import { SettingsEntity } from './settings.entity';
@@ -9,10 +8,10 @@ import { SettingsEntity } from './settings.entity';
 export class AppService {
   constructor(
     @InjectRepository(SettingsEntity)
-    private settingsRepository: Repository<Settings>
+    private settingsRepository: Repository<SettingsEntity>
   ) {}
 
-  async getSettings(): Promise<Settings> {
+  async getSettings(): Promise<Omit<SettingsEntity, 'id'>> {
     const globalSettings = await this.settingsRepository.findOne();
 
     if (!globalSettings) {
@@ -23,7 +22,9 @@ export class AppService {
     }
   }
 
-  async updateSettings(settings: Partial<Settings>): Promise<Settings> {
+  async updateSettings(
+    settings: Omit<SettingsEntity, 'id'>
+  ): Promise<Omit<SettingsEntity, 'id'>> {
     const globalSettings = await this.settingsRepository.findOne();
 
     if (!globalSettings) {

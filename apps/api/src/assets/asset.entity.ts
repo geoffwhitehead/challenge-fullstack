@@ -1,8 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Asset } from '@org/types';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class AssetEntity {
+export class AssetEntity implements Asset {
   @PrimaryGeneratedColumn()
   @ApiProperty({
     example: 123,
