@@ -2,9 +2,7 @@ import {
   Body,
   Controller,
   Get,
-  Param,
   Post,
-  Res,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -59,11 +57,5 @@ export class UsersController {
     @Body() user: Omit<UserDto, 'photo'>
   ) {
     return this.userService.createUser({ photo: file, user: user });
-  }
-
-  @Get('photo/:imgId')
-  test(@Param('imgId') imgId, @Res() res) {
-    const imgPath = imgId;
-    return res.sendFile(imgPath, { root: 'uploads' });
   }
 }

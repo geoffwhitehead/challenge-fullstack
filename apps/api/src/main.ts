@@ -18,7 +18,7 @@ async function bootstrap() {
 
   const swaggerOpts = new DocumentBuilder()
     .setTitle('fullstack')
-    .setDescription('fullstack')
+    .setDescription('fullstack api description')
     .setVersion('1.0')
     .addTag('fullstack')
     .build();
