@@ -45,5 +45,5 @@ export class UserEntity implements User {
     example: 456,
     description: 'The reference to the photo asset',
   })
-  photo: number;
+  photo: number | AssetEntity;
 }
