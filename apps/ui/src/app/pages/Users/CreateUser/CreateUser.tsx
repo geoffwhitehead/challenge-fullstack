@@ -12,7 +12,7 @@ const SUPPORTED_FORMATS = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
 const FILE_SIZE = 1000000 * 3; // in bytes;
 
 export const CreateUserPage: React.FC<{}> = () => {
-  const [postUser, isLoading, hasErrored] = useCreateUser();
+  const { postUser, isLoading, hasErrored } = useCreateUser();
   const history = useHistory();
 
   const formik = useFormik({

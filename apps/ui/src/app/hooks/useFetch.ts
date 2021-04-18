@@ -5,27 +5,32 @@ type MakeFetchProps = {
   opts?: RequestInit;
 };
 
+type FetchResponse<T> = {
+  statusCode: number;
+  body: T;
+};
+
 export const useFetch = <T>() => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasErrored, setHasErrored] = useState(false);
 
-  const makeFetch = useCallback(
-    async ({ url, opts }: MakeFetchProps): Promise<T> => {
-      setIsLoading(true);
+  const makeFetch = useCallback(async ({ url, opts }: MakeFetchProps): Promise<
+    FetchResponse<T>
+  > => {
+    setIsLoading(true);
 
-      const response = await fetch(url, opts);
-      const body = await response.json();
+    const response = await fetch(url, opts);
+    const body = await response.json();
 
-      setIsLoading(false);
-      if (!response.ok) {
-        setHasErrored(true);
-        return null;
-      } else {
-        return body;
-      }
-    },
-    []
-  );
+    setIsLoading(false);
+
+    if (!response.ok) setHasErrored(true);
+
+    return {
+      statusCode: response.status,
+      body,
+    };
+  }, []);
 
   return {
     fetch: makeFetch,

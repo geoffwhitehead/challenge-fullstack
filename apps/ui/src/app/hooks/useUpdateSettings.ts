@@ -1,44 +1,39 @@
 import { Settings } from '@org/types';
-import { useState } from 'react';
+import { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { config } from '../../config';
 import { getItem } from '../../helpers/localStorage';
 import { useSettings } from '../contexts/SettingsContext';
+import { useFetch } from './useFetch';
 
 export const useUpdateSettings = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [hasErrored, setHasErrored] = useState(false);
   const { setSettings } = useSettings();
   const history = useHistory();
+  const { fetch, isLoading, hasErrored } = useFetch<Settings>();
 
-  const updateSettings = async (data: Settings) => {
-    setIsLoading(true);
-    setHasErrored(false);
+  const updateSettings = useCallback(
+    async (data: Settings) => {
+      const { body, statusCode } = await fetch({
+        url: `${config.apiUrl}/settings`,
+        opts: {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + getItem('access_token'),
+          },
+        },
+      });
 
-    const response = await fetch(`${config.apiUrl}/settings`, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + getItem('access_token'),
-      },
-    });
+      if (statusCode === 401) {
+        // token expired - redirect to login - refresh / sessions token not implemented
+        return history.push('/login');
+      }
 
-    if (response.status === 401) {
-      // token expired - redirect to login - refresh / sessions token not implemented
-      history.push('/login');
-    }
-
-    if (!response.ok) {
-      setHasErrored(true);
-    } else {
-      const updatedSettings = await response.json();
-      // update local cache of settings with settings returned from api
-      setSettings(updatedSettings);
-    }
-
-    setIsLoading(false);
-  };
+      if (body) setSettings(body);
+    },
+    [fetch, history.push]
+  );
 
   return { updateSettings, isLoading, hasErrored };
 };

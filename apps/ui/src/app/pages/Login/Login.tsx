@@ -6,7 +6,7 @@ import { Error, Field, Label } from '../../components/Form';
 import { useLogin } from '../../hooks/useLogin';
 
 export const LoginPage: React.FC<{}> = () => {
-  const [login, isLoading, hasErrored] = useLogin();
+  const { login, isLoading, hasErrored } = useLogin();
 
   const formik = useFormik({
     initialValues: {

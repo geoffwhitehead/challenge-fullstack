@@ -1,26 +1,24 @@
 import { Settings } from '@org/types';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { config } from '../../config';
+import { useFetch } from './useFetch';
 
 export const useGetSettings = () => {
-  const [settings, setSettings] = useState<Settings>();
-  const [isLoading, setIsLoading] = useState(false);
-  const [hasErrored, setHasErrored] = useState(false);
+  const [settings, setValue] = useState<Settings>();
+  const { fetch, isLoading, hasErrored } = useFetch<Settings>();
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
-      const response = await fetch(`${config.apiUrl}/settings`);
-      const result = await response.json();
-      if (response.ok) {
-        setSettings(result);
-      } else {
-        setHasErrored(true);
-      }
-      setIsLoading(false);
+      const { body } = await fetch({
+        url: `${config.apiUrl}/settings`,
+      });
+      if (body) setValue(body);
     };
 
     fetchData();
-  }, [setSettings, setIsLoading, setHasErrored]);
+  }, []);
+
+  const setSettings = useCallback((settings) => setValue(settings), [setValue]);
+
   return { settings, setSettings, isLoading, hasErrored };
 };

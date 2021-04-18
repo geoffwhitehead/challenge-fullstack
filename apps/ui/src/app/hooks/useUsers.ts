@@ -1,26 +1,22 @@
 import { User } from '@org/types';
 import { useEffect, useState } from 'react';
 import { config } from '../../config';
+import { useFetch } from './useFetch';
 
 export const useUsers = () => {
   const [users, setUsers] = useState<User[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [hasErrored, setHasErrored] = useState(false);
+  const { fetch, isLoading, hasErrored } = useFetch<User[]>();
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
-      const response = await fetch(`${config.apiUrl}/users`);
-      const result = await response.json();
-      if (response.ok) {
-        setUsers(result);
-      } else {
-        setHasErrored(true);
-      }
-      setIsLoading(false);
+      const { body } = await fetch({
+        url: `${config.apiUrl}/users`,
+      });
+      if (body) setUsers(body);
     };
 
     fetchData();
-  }, [setUsers, setIsLoading]);
+  }, [fetch, setUsers]);
+
   return { users, isLoading, hasErrored };
 };

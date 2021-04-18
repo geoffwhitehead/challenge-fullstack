@@ -1,39 +1,37 @@
-import { UserLoginDto } from '@org/types';
-import { useState } from 'react';
+import { UserLoginDto, UserLoginResponse } from '@org/types';
+import { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAuthenticatedUser } from '../../app/contexts/AuthenticatedContext';
 import { config } from '../../config';
 import { setItem } from '../../helpers/localStorage';
+import { useFetch } from './useFetch';
 
 export const useLogin = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [hasErrored, setHasErrored] = useState(false);
   const { setIsAuthenticated } = useAuthenticatedUser();
   const history = useHistory();
+  const { fetch, isLoading, hasErrored } = useFetch<UserLoginResponse>();
 
-  const login = async (data: UserLoginDto) => {
-    setIsLoading(true);
-    setHasErrored(false);
+  const login = useCallback(
+    async (data: UserLoginDto) => {
+      const { body } = await fetch({
+        url: `${config.apiUrl}/auth/login`,
+        opts: {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      });
 
-    const response = await fetch(`${config.apiUrl}/auth/login`, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+      if (body.access_token) {
+        setItem('access_token', body.access_token);
+        setIsAuthenticated(true);
+        history.push('/');
+      }
+    },
+    [fetch, setItem, setIsAuthenticated, history.push]
+  );
 
-    const body = await response.json();
-
-    if (!response.ok) {
-      setHasErrored(true);
-    } else {
-      setItem('access_token', body.access_token);
-      setIsAuthenticated(true);
-      history.push('/');
-    }
-    setIsLoading(false);
-  };
-
-  return [login, isLoading, hasErrored] as const;
+  return { login, isLoading, hasErrored };
 };

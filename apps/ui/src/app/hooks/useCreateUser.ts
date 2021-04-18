@@ -1,32 +1,30 @@
-import { UserDto } from '@org/types';
-import { useState } from 'react';
+import { User, UserDto } from '@org/types';
+import { useCallback } from 'react';
 import { config } from '../../config';
+import { useFetch } from './useFetch';
 
 export const useCreateUser = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [hasErrored, setHasErrored] = useState(false);
+  const { fetch, isLoading, hasErrored } = useFetch<User>();
 
-  const postUser = async (data: UserDto) => {
-    setIsLoading(true);
-    setHasErrored(false);
+  const postUser = useCallback(
+    async (data: UserDto) => {
+      let formData = new FormData();
+      formData.append('photo', data.photo, data.photo.name);
+      formData.append('firstName', data.firstName);
+      formData.append('lastName', data.lastName);
+      formData.append('phone', data.phone);
+      formData.append('email', data.email);
 
-    let formData = new FormData();
-    formData.append('photo', data.photo, data.photo.name);
-    formData.append('firstName', data.firstName);
-    formData.append('lastName', data.lastName);
-    formData.append('phone', data.phone);
-    formData.append('email', data.email);
+      await fetch({
+        url: `${config.apiUrl}/users`,
+        opts: {
+          method: 'POST',
+          body: formData,
+        },
+      });
+    },
+    [fetch]
+  );
 
-    const response = await fetch(`${config.apiUrl}/users`, {
-      method: 'POST',
-      body: formData,
-    });
-
-    if (!response.ok) {
-      setHasErrored(true);
-    }
-    setIsLoading(false);
-  };
-
-  return [postUser, isLoading, hasErrored] as const;
+  return { postUser, isLoading, hasErrored };
 };

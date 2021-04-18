@@ -26,10 +26,10 @@ export const AuthenticatedUserProvider = ({
     isAuthenticated: false,
   });
 
-  const setIsAuthenticated = useCallback((isAuthenticated: boolean) => {
-    console.log(`callback isauth`, isAuthenticated);
-    setValue({ isAuthenticated });
-  }, []);
+  const setIsAuthenticated = useCallback(
+    (isAuthenticated: boolean) => setValue({ isAuthenticated }),
+    []
+  );
 
   useEffect(() => {
     const token = getItem('access_token');
