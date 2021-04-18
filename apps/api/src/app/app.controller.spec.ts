@@ -47,6 +47,7 @@ describe('AppController', () => {
   });
 
   it('should be defined', () => {
+    expect(appController).toBeDefined();
     expect(appService).toBeDefined();
     expect(authService).toBeDefined();
   });

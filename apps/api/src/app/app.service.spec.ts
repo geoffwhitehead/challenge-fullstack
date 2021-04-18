@@ -19,6 +19,8 @@ describe('AppService', () => {
           useValue: {
             findOne: jest.fn().mockResolvedValue(testSettings),
             update: jest.fn().mockResolvedValue(true),
+            save: jest.fn().mockResolvedValue(true),
+            create: jest.fn().mockResolvedValue(true),
           },
         },
       ],
@@ -32,6 +34,7 @@ describe('AppService', () => {
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+    expect(repo).toBeDefined();
   });
 
   describe('getSettings', () => {
