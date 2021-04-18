@@ -29,7 +29,7 @@ export const CreateUserPage: React.FC = () => {
         .min(2, 'Too Short!')
         .max(50, 'Too Long!')
         .required('Required'),
-      photo: Yup.mixed()
+      photo: Yup.mixed<File>()
         .required()
         .test('fileSize', 'File Size is too large', (value) => {
           return value?.size && value.size <= FILE_SIZE;
