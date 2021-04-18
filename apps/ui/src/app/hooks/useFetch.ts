@@ -19,17 +19,22 @@ export const useFetch = <T>() => {
   > => {
     setIsLoading(true);
 
-    const response = await fetch(url, opts);
-    const body = await response.json();
+    try {
+      const response = await fetch(url, opts);
+      const body = await response.json();
 
-    setIsLoading(false);
+      setIsLoading(false);
 
-    if (!response.ok) setHasErrored(true);
+      if (!response.ok) setHasErrored(true);
 
-    return {
-      statusCode: response.status,
-      body,
-    };
+      return {
+        statusCode: response.status,
+        body,
+      };
+    } catch (e) {
+      setIsLoading(false);
+      setHasErrored(true);
+    }
   }, []);
 
   return {
