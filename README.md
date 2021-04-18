@@ -48,7 +48,7 @@ S3_BUCKET=<myBucketName>
 
 3. Run `docker-compose up` in the root directory. This will host the node server on `localhost:3333` and postgres on `localhost:5432`
 
-Alternatively you can also serve the api using nx with `yarn dev api` (docker isnt configured to rebuild on code changes).
+Alternatively you can also serve the api using nx with `yarn dev api`.
 
 ### Front end
 
@@ -62,3 +62,4 @@ Run `yarn dev ui` in the root directory.
 - Refresh / session tokens
 - Use multer-s3 to immediately store assets in s3
 - Store auth users credentials in db.
+- Localstack to allow s3 asset creation without an aws s3 account.
