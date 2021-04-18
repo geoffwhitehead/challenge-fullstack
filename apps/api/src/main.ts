@@ -12,6 +12,8 @@ import { config } from './config/config';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  // TODO: Look into removing this
   app.enableCors();
 
   app.setGlobalPrefix('api');

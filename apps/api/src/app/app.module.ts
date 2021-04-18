@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { AssetsModule } from '../assets/assets.module';
 import { AuthModule } from '../auth/auth.module';
-import { config } from '../config/config';
+import { config, configValidator } from '../config/config';
 import { DatabaseModule } from '../database/database.module';
 import { UsersModule } from '../users/users.module';
 import { AppController } from './app.controller';
@@ -22,6 +22,7 @@ import { SettingsEntity } from './settings.entity';
     ConfigModule.forRoot({
       load: [config],
       isGlobal: true,
+      validationSchema: configValidator,
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'ui'),

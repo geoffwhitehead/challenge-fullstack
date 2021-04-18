@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "license": "MIT",
   "engines": {
-    "node": "12.x"
+    "node": ">12.x"
   },
   "scripts": {
     "nx": "nx",
+    "dev:ui": "NX_API_URL=https://fullstack-gw.herokuapp.com/api yarn nx serve ui",
     "dev": "nx serve",
     "dev:all": "nx run-many --target=serve --projects=ui,api --parallel",
     "start": "node dist/apps/api/main.js",
@@ -46,6 +47,7 @@
     "core-js": "^3.6.5",
     "document-register-element": "1.13.1",
     "formik": "^2.2.6",
+    "joi": "^17.4.0",
     "lodash": "^4.17.21",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",

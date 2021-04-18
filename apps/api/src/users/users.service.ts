@@ -34,7 +34,7 @@ export class UsersService {
       bucket: this.configService.get('s3Bucket'),
     });
 
-    const newUser = await this.usersRepository.create({
+    const newUser = this.usersRepository.create({
       ...user,
       photo: asset.id,
     });
@@ -44,7 +44,6 @@ export class UsersService {
      * Note: Another option here would be to use multer-s3 in the controller
      * to upload the file directly to aws, skipping this step entirely.
      */
-
     await this.fs.unlinkSync(photo.path);
     return this.usersRepository.save(newUser);
   }

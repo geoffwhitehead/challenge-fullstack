@@ -10,6 +10,12 @@ type AuthUserProps = {
 export type LoginResponse = {
   access_token: string;
 };
+
+export type JWTPayload = {
+  email: string;
+  sub: string;
+};
+
 @Injectable()
 export class AuthService {
   constructor(private jwtService: JwtService) {}
@@ -38,7 +44,7 @@ export class AuthService {
   }
 
   login(user: AuthUserProps): LoginResponse {
-    const payload = { email: user.email, sub: user.id };
+    const payload: JWTPayload = { email: user.email, sub: user.id };
     return {
       access_token: this.jwtService.sign(payload),
     };

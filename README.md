@@ -9,6 +9,7 @@ Nx is used to scaffold the monorepo with the api built using nest js, and ui in 
 - docker
 - docker-compose
 - node
+- yarn
 
 # Instructions
 
@@ -26,13 +27,28 @@ You can view the swagger docs by navigating to `<baseUrl>/api`.
 
 ## Running locally
 
+### Front end only using hosted backend services
+
+Run `yarn dev:ui` in the root directory.
+
 ### Backend services
 
-1. Build the docker image by running `yarn nx deploy api`
+1. Create a `.env` file in `/api` containing the following.
 
-2. Run `docker-compose up` in the root directory. This will host the node server on `localhost:3333` and postgres on `localhost:5432`
+```
+JWT_KEY=<mySecretKey>
+AWS_ACCESS_KEY=<mySecretKey>
+AWS_SECRET_ACCESS_KEY=<mySecretKey>
+S3_BUCKET=<myBucketName>
+```
 
-Note: You can also serve the api using nx with `yarn dev api` (docker isnt configured to rebuild on code changes).
+**You can enter any values here but Localstack isn't set up at the moment, so without valid s3 keys user creation wont work.**
+
+2. Build the docker image by running `yarn nx deploy api`
+
+3. Run `docker-compose up` in the root directory. This will host the node server on `localhost:3333` and postgres on `localhost:5432`
+
+Alternatively you can also serve the api using nx with `yarn dev api` (docker isnt configured to rebuild on code changes).
 
 ### Front end
 
@@ -40,7 +56,6 @@ Run `yarn dev ui` in the root directory.
 
 # Future improvements
 
-- Add tests throughout
 - Add CI/CD pipeline
 - Improve UI styling
 - Improve logging
