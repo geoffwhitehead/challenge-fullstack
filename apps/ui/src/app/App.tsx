@@ -8,7 +8,7 @@ import { LoginPage } from './pages/Login/Login';
 import { CreateUserPage } from './pages/Users/CreateUser/CreateUser';
 import { UsersPage } from './pages/Users/Users';
 
-export const App: React.FC<{}> = () => {
+export const App: React.FC = () => {
   return (
     <AuthenticatedUserProvider>
       <SettingsProvider>

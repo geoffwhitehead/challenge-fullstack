@@ -30,7 +30,7 @@ export const useLogin = () => {
         history.push('/');
       }
     },
-    [fetch, setItem, setIsAuthenticated, history.push]
+    [fetch, setIsAuthenticated, history]
   );
 
   return { login, isLoading, hasErrored };

@@ -10,7 +10,7 @@ import { useUpdateSettings } from '../../hooks/useUpdateSettings';
 import { useUsers } from '../../hooks/useUsers';
 import { UserList } from './UserList/UserList';
 
-export const UsersPage: React.FC<{}> = () => {
+export const UsersPage: React.FC = () => {
   const { users, isLoading, hasErrored } = useUsers();
   const { isAuthenticated } = useAuthenticatedUser();
   const { settings } = useSettings();

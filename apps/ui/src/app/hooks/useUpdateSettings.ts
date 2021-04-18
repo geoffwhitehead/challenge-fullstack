@@ -32,7 +32,7 @@ export const useUpdateSettings = () => {
 
       if (body) setSettings(body);
     },
-    [fetch, history.push]
+    [fetch, history, setSettings]
   );
 
   return { updateSettings, isLoading, hasErrored };

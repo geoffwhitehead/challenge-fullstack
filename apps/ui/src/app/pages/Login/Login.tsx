@@ -5,7 +5,7 @@ import { Button } from '../../components/Button/Button';
 import { Error, Field, Label } from '../../components/Form';
 import { useLogin } from '../../hooks/useLogin';
 
-export const LoginPage: React.FC<{}> = () => {
+export const LoginPage: React.FC = () => {
   const { login, isLoading, hasErrored } = useLogin();
 
   const formik = useFormik({

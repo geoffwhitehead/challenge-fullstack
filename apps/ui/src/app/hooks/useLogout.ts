@@ -11,7 +11,7 @@ export const useLogout = () => {
     setItem('access_token', null);
     setIsAuthenticated(false);
     history.push('/');
-  }, [setItem, setIsAuthenticated, history.push]);
+  }, [setIsAuthenticated, history]);
 
   return [logout] as const;
 };

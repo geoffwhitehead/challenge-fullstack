@@ -8,7 +8,7 @@ export const useCreateUser = () => {
 
   const postUser = useCallback(
     async (data: UserDto) => {
-      let formData = new FormData();
+      const formData = new FormData();
       formData.append('photo', data.photo, data.photo.name);
       formData.append('firstName', data.firstName);
       formData.append('lastName', data.lastName);

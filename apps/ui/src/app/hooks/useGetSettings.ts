@@ -16,7 +16,7 @@ export const useGetSettings = () => {
     };
 
     fetchData();
-  }, []);
+  }, [fetch]);
 
   const setSettings = useCallback((settings) => setValue(settings), [setValue]);
 

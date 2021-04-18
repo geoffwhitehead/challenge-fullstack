@@ -11,7 +11,7 @@ const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2
 const SUPPORTED_FORMATS = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
 const FILE_SIZE = 1000000 * 3; // in bytes;
 
-export const CreateUserPage: React.FC<{}> = () => {
+export const CreateUserPage: React.FC = () => {
   const { postUser, isLoading, hasErrored } = useCreateUser();
   const history = useHistory();
 
