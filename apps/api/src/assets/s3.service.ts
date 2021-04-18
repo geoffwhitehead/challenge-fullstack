@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { S3 } from 'aws-sdk';
-import * as fs from 'fs';
+import * as Fs from 'fs';
 import { UploadedFile } from '../users/users.controller';
 
 type UploadAssetProps = {
@@ -14,7 +14,7 @@ type UploadAssetProps = {
 export class S3Service {
   private client: S3;
 
-  constructor(private configService: ConfigService) {
+  constructor(private configService: ConfigService, private fs: typeof Fs) {
     this.client = new S3({
       accessKeyId: this.configService.get('awsAccessKey'),
       secretAccessKey: this.configService.get('awsSecretAccessKey'),
@@ -28,7 +28,7 @@ export class S3Service {
   }: UploadAssetProps): Promise<S3.ManagedUpload.SendData> {
     let data: Buffer;
     try {
-      data = await fs.readFileSync(asset.path);
+      data = await this.fs.readFileSync(asset.path);
     } catch (e) {
       console.error(e);
     }

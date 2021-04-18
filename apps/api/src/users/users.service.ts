@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserDto } from '@org/types';
-import * as fs from 'fs';
+import * as Fs from 'fs';
 import { Repository } from 'typeorm';
 import { AssetsService } from '../assets/assets.service';
 import { UserEntity } from './user.entity';
@@ -19,7 +19,8 @@ export class UsersService {
     @InjectRepository(UserEntity)
     private usersRepository: Repository<UserEntity>,
     private assetsService: AssetsService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    @Inject('fs') private fs: typeof Fs
   ) {}
 
   async getUsers(): Promise<UserEntity[]> {
@@ -44,7 +45,7 @@ export class UsersService {
      * to upload the file directly to aws, skipping this step entirely.
      */
 
-    await fs.unlinkSync(photo.path);
+    await this.fs.unlinkSync(photo.path);
     return this.usersRepository.save(newUser);
   }
 }
