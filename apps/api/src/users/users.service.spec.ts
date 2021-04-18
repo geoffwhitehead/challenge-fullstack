@@ -1,6 +1,6 @@
+import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { ConfigService } from 'aws-sdk';
 import { Repository } from 'typeorm';
 import { AssetEntity } from '../assets/asset.entity';
 import { AssetsService } from '../assets/assets.service';
@@ -31,13 +31,20 @@ const testFile: UploadedFile = {
 };
 
 const testAsset: AssetEntity = {
-  id: 123,
+  id: 456,
   mimetype: 'image/png',
   size: 1000,
   bucket: 'my-aws-bucket',
   key: 'folder/file.ext',
   location: 'https://my-bucket.s3.amazonaws.com/my-key',
 };
+
+const populatedTestUsers = [
+  {
+    ...testUsers[0],
+    photo: testAsset,
+  },
+];
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -52,7 +59,7 @@ describe('UsersService', () => {
         {
           provide: getRepositoryToken(UserEntity),
           useValue: {
-            find: jest.fn().mockResolvedValue(testUsers),
+            find: jest.fn().mockResolvedValue(populatedTestUsers),
             create: jest.fn().mockResolvedValue(testUsers[0]),
             save: jest.fn().mockResolvedValue(testUsers[0]),
           },
@@ -66,7 +73,16 @@ describe('UsersService', () => {
         {
           provide: ConfigService,
           useValue: {
-            s3Bucket: 'my-aws-bucket',
+            get: jest.fn().mockImplementation((key: string) => {
+              const conf = { s3Bucket: 'my-aws-bucket' };
+              return conf[key];
+            }),
+          },
+        },
+        {
+          provide: 'fs',
+          useValue: {
+            unlinkSync: jest.fn().mockResolvedValue(true),
           },
         },
       ],
@@ -85,9 +101,20 @@ describe('UsersService', () => {
     expect(repo).toBeDefined();
   });
 
+  describe('getUsers', () => {
+    it('should return an array of populated users', () => {
+      const repoSpy = jest.spyOn(repo, 'find');
+      expect(service.getUsers()).resolves.toEqual(populatedTestUsers);
+      expect(repoSpy).toBeCalledTimes(1);
+    });
+  });
+
   describe('createUser', () => {
     it('should return a created user', async () => {
-      expect(
+      const repoCreateSpy = jest.spyOn(repo, 'create');
+      const repoSaveSpy = jest.spyOn(repo, 'save');
+
+      await expect(
         service.createUser({
           user: {
             firstName: 'Peter',
@@ -99,18 +126,21 @@ describe('UsersService', () => {
         })
       ).resolves.toEqual(testUsers[0]);
 
-      expect(assetsService.createAsset).toHaveBeenCalledWith({
+      await expect(assetsService.createAsset).toHaveBeenCalledWith({
         asset: testFile,
         cannedAcl: 'public-read',
         bucket: 'my-aws-bucket',
       });
-      expect(repo.create).toBeCalledTimes(1);
-      expect(repo.create).toHaveBeenCalledWith({
-        ...testUsers[0],
+
+      const { id, ...createUserProps } = testUsers[0];
+      expect(repoCreateSpy).toBeCalledTimes(1);
+      expect(repoCreateSpy).toBeCalledWith({
+        ...createUserProps,
         photo: testAsset.id,
       });
-      expect(repo.save).toHaveBeenCalledWith({
-        ...testUsers[0],
+      expect(repoSaveSpy).toHaveBeenCalledWith({
+        ...createUserProps,
+        id,
         photo: testAsset.id,
       });
     });
