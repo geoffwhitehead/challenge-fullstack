@@ -1,10 +1,11 @@
-import { useFormik } from 'formik';
+import { Formik } from 'formik';
 import React from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 import { Button } from '../../../components/Button/Button';
 import { Error, Field, Label } from '../../../components/Form';
+import { FormikField } from '../../../components/FormikField/FormikField';
 import { useCreateUser } from '../../../hooks/useCreateUser';
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
@@ -15,7 +16,7 @@ export const CreateUserPage: React.FC = () => {
   const { postUser, isLoading, hasErrored } = useCreateUser();
   const history = useHistory();
 
-  const formik = useFormik({
+  const formikProps = {
     initialValues: {
       firstName: '',
       lastName: '',
@@ -49,88 +50,48 @@ export const CreateUserPage: React.FC = () => {
       await postUser(values);
       history.push('/users');
     },
-  });
+  };
 
   return (
-    <StyledForm onSubmit={formik.handleSubmit}>
-      <NavLink to="/users">
-        <Button>Go back</Button>
-      </NavLink>
-      <Field>
-        <Label htmlFor="firstName">First Name</Label>
+    <Formik {...formikProps}>
+      {(formik) => (
+        <StyledForm onSubmit={formik.handleSubmit}>
+          <NavLink to="/users">
+            <Button>Go back</Button>
+          </NavLink>
+          <FormikField fieldName="firstName" label="First Name" type="text" />
+          <FormikField fieldName="lastName" label="Last Name" type="text" />
+          <FormikField fieldName="phone" label="Phone" type="text" />
+          <FormikField fieldName="email" label="Phone" type="text" />
+          <Field>
+            <Label htmlFor="photo">Photo</Label>
+            <input
+              id="photo"
+              type="file"
+              accept="image/*"
+              name="photo"
+              onChange={(e) => {
+                e?.target?.files?.[0] &&
+                  formik.setFieldValue('photo', e.target.files[0]);
+                formik.setFieldTouched('photo');
+              }}
+            />
+            {formik.touched.photo && formik.errors.photo ? (
+              <Error>{formik.errors.photo}</Error>
+            ) : null}
+          </Field>
 
-        <input
-          id="firstName"
-          type="text"
-          {...formik.getFieldProps('firstName')}
-        />
-        {formik.touched.firstName && formik.errors.firstName ? (
-          <Error>{formik.errors.firstName}</Error>
-        ) : null}
-      </Field>
+          {hasErrored ? <Error>Failed to upload</Error> : null}
 
-      <Field>
-        <Label htmlFor="lastName">Last Name</Label>
-
-        <input
-          id="lastName"
-          type="text"
-          {...formik.getFieldProps('lastName')}
-        />
-
-        {formik.touched.lastName && formik.errors.lastName ? (
-          <Error>{formik.errors.lastName}</Error>
-        ) : null}
-      </Field>
-
-      <Field>
-        <Label htmlFor="phone">Phone</Label>
-
-        <input id="phone" type="text" {...formik.getFieldProps('phone')} />
-
-        {formik.touched.phone && formik.errors.phone ? (
-          <Error>{formik.errors.phone}</Error>
-        ) : null}
-      </Field>
-
-      <Field>
-        <Label htmlFor="email">Email Address</Label>
-
-        <input id="email" type="text" {...formik.getFieldProps('email')} />
-
-        {formik.touched.email && formik.errors.email ? (
-          <Error>{formik.errors.email}</Error>
-        ) : null}
-      </Field>
-
-      <Field>
-        <Label htmlFor="photo">Photo</Label>
-
-        <input
-          id="photo"
-          type="file"
-          accept="image/*"
-          name="photo"
-          onChange={(e) => {
-            e?.target?.files?.[0] &&
-              formik.setFieldValue('photo', e.target.files[0]);
-            formik.setFieldTouched('photo');
-          }}
-        />
-        {formik.touched.photo && formik.errors.photo ? (
-          <Error>{formik.errors.photo}</Error>
-        ) : null}
-      </Field>
-
-      {hasErrored ? <Error>Failed to upload</Error> : null}
-
-      <Button
-        type="submit"
-        disabled={!(formik.isValid && formik.dirty) || isLoading}
-      >
-        Submit
-      </Button>
-    </StyledForm>
+          <Button
+            type="submit"
+            disabled={!(formik.isValid && formik.dirty) || isLoading}
+          >
+            Submit
+          </Button>
+        </StyledForm>
+      )}
+    </Formik>
   );
 };
 

@@ -1,14 +1,15 @@
-import { useFormik } from 'formik';
+import { Formik } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
 import { Button } from '../../components/Button/Button';
-import { Error, Field, Label } from '../../components/Form';
+import { Error } from '../../components/Form';
+import { FormikField } from '../../components/FormikField/FormikField';
 import { useLogin } from '../../hooks/useLogin';
 
 export const LoginPage: React.FC = () => {
   const { login, isLoading, hasErrored } = useLogin();
 
-  const formik = useFormik({
+  const formikOptions = {
     initialValues: {
       password: '',
       email: '',
@@ -24,39 +25,22 @@ export const LoginPage: React.FC = () => {
       email: Yup.string().email('Invalid email').required('Required'),
     }),
     onSubmit: (values) => login(values),
-  });
+  };
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <Field>
-        <Label htmlFor="email">Email Address</Label>
+    <Formik {...formikOptions}>
+      {(formik) => (
+        <form onSubmit={formik.handleSubmit}>
+          <FormikField fieldName="email" label="Email Address" type="text" />
+          <FormikField fieldName="password" label="Password" type="password" />
 
-        <input id="email" type="text" {...formik.getFieldProps('email')} />
+          {hasErrored ? <Error>Failed to login</Error> : null}
 
-        {formik.touched.email && formik.errors.email ? (
-          <Error>{formik.errors.email}</Error>
-        ) : null}
-      </Field>
-
-      <Field>
-        <Label htmlFor="password">Password</Label>
-
-        <input
-          id="password"
-          type="password"
-          {...formik.getFieldProps('password')}
-        />
-
-        {formik.touched.password && formik.errors.password ? (
-          <Error>{formik.errors.password}</Error>
-        ) : null}
-      </Field>
-
-      {hasErrored ? <Error>Failed to login</Error> : null}
-
-      <Button type="submit" disabled={!formik.isValid || isLoading}>
-        Submit
-      </Button>
-    </form>
+          <Button type="submit" disabled={!formik.isValid || isLoading}>
+            Submit
+          </Button>
+        </form>
+      )}
+    </Formik>
   );
 };
