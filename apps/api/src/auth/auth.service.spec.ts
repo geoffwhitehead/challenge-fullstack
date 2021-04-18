@@ -9,6 +9,7 @@ const authUserDetails = {
 };
 describe('AuthService', () => {
   let service: AuthService;
+  let jwtService: JwtService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -24,10 +25,12 @@ describe('AuthService', () => {
     }).compile();
 
     service = module.get<AuthService>(AuthService);
+    jwtService = module.get<JwtService>(JwtService);
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+    expect(jwtService).toBeDefined();
   });
 
   describe('login', () => {
@@ -35,7 +38,10 @@ describe('AuthService', () => {
       expect(service.login(authUserDetails)).toEqual({
         access_token: 'access_token',
       });
-      expect(service.login).toHaveBeenCalledTimes(1);
+      expect(jwtService.sign).toHaveBeenCalledWith({
+        email: authUserDetails.email,
+        sub: authUserDetails.id,
+      });
     });
   });
 });
