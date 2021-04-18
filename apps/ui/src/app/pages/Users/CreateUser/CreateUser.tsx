@@ -62,7 +62,7 @@ export const CreateUserPage: React.FC = () => {
           <FormikField fieldName="firstName" label="First Name" type="text" />
           <FormikField fieldName="lastName" label="Last Name" type="text" />
           <FormikField fieldName="phone" label="Phone" type="text" />
-          <FormikField fieldName="email" label="Phone" type="text" />
+          <FormikField fieldName="email" label="Email" type="text" />
           <Field>
             <Label htmlFor="photo">Photo</Label>
             <input
