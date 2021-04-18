@@ -2,12 +2,12 @@
 
 # Description
 
-Nx is used to scaffold the monorepo with the api built using nest js, and ui in React. Postgres is used as the database and is ran from docker locally. A heroku managed service is used in deployment.
+Nx is used to scaffold the monorepo, the api is built using Nest.js, and the ui is built with React. Postgres is used as the database and is ran from docker locally and a heroku managed service in deployment.
 
 # Requirements
 
-- docker
-- docker-compose
+- docker (for running backend services locally)
+- docker-compose (for running backend services locally)
 - node
 - yarn
 
@@ -56,6 +56,7 @@ Run `yarn dev ui` in the root directory.
 
 # Future improvements
 
+- Expand ui testing
 - Add CI/CD pipeline
 - Improve UI styling
 - Improve logging
