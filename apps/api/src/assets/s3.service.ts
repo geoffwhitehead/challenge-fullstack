@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { S3 } from 'aws-sdk';
 import * as Fs from 'fs';
@@ -14,7 +14,10 @@ type UploadAssetProps = {
 export class S3Service {
   private client: S3;
 
-  constructor(private configService: ConfigService, private fs: typeof Fs) {
+  constructor(
+    private configService: ConfigService,
+    @Inject('fs') private fs: typeof Fs
+  ) {
     this.client = new S3({
       accessKeyId: this.configService.get('awsAccessKey'),
       secretAccessKey: this.configService.get('awsSecretAccessKey'),
