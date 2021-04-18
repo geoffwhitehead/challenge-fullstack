@@ -23,7 +23,7 @@ const testS3Response = {
   Location: 'https://my-bucket.s3.amazonaws.com/my-key',
 };
 
-let testAssets: AssetEntity[] = [
+const testAssets: AssetEntity[] = [
   {
     id: 123,
     mimetype: testFile.mimetype,
