@@ -33,3 +33,7 @@ export type UserLoginDto = {
   email: string;
   password: string;
 };
+
+export type UserLoginResponse = {
+  access_token: string;
+};
