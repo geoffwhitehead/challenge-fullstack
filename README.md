@@ -1,5 +1,21 @@
 # Challenge-fullstack
 
+# Problem
+Build a react app with node backend and deploy it. Use React, Node, Postgres
+
+- User can register on the website
+- Registration requires the user to fill out ALL profile fields
+- Profile fields include first name, last name, profilepic, phone number, email
+- User data should be persisted in a database
+- Users are uniquely identified by their email address
+- The users list should show all the details of the registered users
+- In the list there should be a button besides every user to view their profile pic
+- A button to toggle enable/disable access to the users list
+- To enable/disable the user list you need to authenticate with a admin email and password.
+- Once disabled, the registered users data should not be accessible
+- We would like to be able to build and run the frontend locally and have it connect to the APIs and database hosted somewhere public so that we do not need to deploy those(we would suggest use Google cloud platform free trial for both APIs and database, though it is fine if you wish to use something else)
+
+
 # Description
 
 Nx is used to scaffold the monorepo, the api is built using Nest.js, and the ui is built with React. Postgres is used as the database and is ran from docker locally and a heroku managed service in deployment.
